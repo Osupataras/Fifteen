@@ -15,13 +15,13 @@ public class FifteenEngine implements KeyListener{
 
     Fifteen fifteen;
     Random random=new Random();
-    int startZeroWeight=Constants.i-1;
+    int startZeroWeight=Constants.i-1; //Sarting position of zero button
     int startZeroHeight=Constants.j-1;
-    public int finalZeroWeight;
+    public int finalZeroWeight;        //Position of target button
     public int finalZeroHeight;
-    int num=1;
-    int r;
-    int count=0;
+    int num=1; //Counter used to fiil the Array
+    int r; //Random direction of moves
+    int count=0; //Number of moves
     public int n[][];
 
     public FifteenEngine(Fifteen fifteen)  {
@@ -29,15 +29,13 @@ public class FifteenEngine implements KeyListener{
         n=new int[Constants.i][Constants.j];
     }
 
-
-
     /**
      * Class for generate starting position by random moves.
      */
 
+
     public void startPosition(int Count) {
-//        create Array
-//        fill Array
+//        create and fill the Array
             for (int k = 0; k < Constants.j; k++) {
                 for (int p = 0; p < Constants.i; p++) {
                     n[p][k] =num++;
@@ -45,6 +43,7 @@ public class FifteenEngine implements KeyListener{
             }
             n[startZeroWeight][startZeroHeight] = 0;
 
+        // Random moves by swaping them (4 direction)
             do {
                 r = random.nextInt(4);
                 count++;
@@ -119,40 +118,41 @@ public class FifteenEngine implements KeyListener{
     public void keyPressed(KeyEvent e) {
         char c=e.getKeyChar();
 
+           /*
+           * Trying to do some moves by WSAD
+           * */
             System.out.println(""+c);
             if (c == 'w') {
                 finalZeroWeight = startZeroWeight;
                 finalZeroHeight = startZeroHeight;
                 finalZeroWeight--;
-
-
                 n[startZeroWeight][startZeroHeight] = n[finalZeroWeight][finalZeroHeight];
                 n[finalZeroWeight][finalZeroHeight] = 0;
                 startZeroWeight = finalZeroWeight;
                 startZeroHeight = finalZeroHeight;
+                fifteen.adding();
 
             }
             if (c == 'd') {
                 finalZeroWeight = startZeroWeight;
                 finalZeroHeight = startZeroHeight;
                 finalZeroHeight++;
-
-
                 n[startZeroWeight][startZeroHeight] = n[finalZeroWeight][finalZeroHeight];
                 n[finalZeroWeight][finalZeroHeight] = 0;
                 startZeroWeight = finalZeroWeight;
                 startZeroHeight = finalZeroHeight;
+                fifteen.adding();
 
             }
             if (c == 's') {
                 finalZeroWeight = startZeroWeight;
                 finalZeroHeight = startZeroHeight;
                 finalZeroWeight++;
-
                 n[startZeroWeight][startZeroHeight] = n[finalZeroWeight][finalZeroHeight];
                 n[finalZeroWeight][finalZeroHeight] = 0;
                 startZeroWeight = finalZeroWeight;
                 startZeroHeight = finalZeroHeight;
+                fifteen.adding();
 
             }
             if (c == 'a') {
@@ -160,12 +160,11 @@ public class FifteenEngine implements KeyListener{
                 finalZeroWeight = startZeroWeight;
                 finalZeroHeight = startZeroHeight;
                 finalZeroHeight--;
-
-
                 n[startZeroWeight][startZeroHeight] = n[finalZeroWeight][finalZeroHeight];
                 n[finalZeroWeight][finalZeroHeight] = 0;
                 startZeroWeight = finalZeroWeight;
                 startZeroHeight = finalZeroHeight;
+                fifteen.adding();
 
             }
 
