@@ -36,7 +36,6 @@ public class GameUi implements KeyListener, IUserInterface{
 
     public void start() {
         gameEngine = new FifteenEngine(this);
-
         //Shuffle the deck by "count" moves
         gameEngine.createStartState(1000);
 
@@ -45,6 +44,9 @@ public class GameUi implements KeyListener, IUserInterface{
 
     private void setupUi(FifteenEngine fifteenEngine) {
         int gameDimension = GameDimensions.DISPLAY_X * GameDimensions.DISPLAY_Y;
+
+        window.setLayout(borderLayout);
+        jPanel.setLayout(gridLayout);
 
         for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
             for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
@@ -58,6 +60,7 @@ public class GameUi implements KeyListener, IUserInterface{
                 if (matrixElement==0){
                     buttons[num].setBackground(Color.BLACK);
                 }
+                jPanel.add(buttons[num]);
 
                 num++;
             }
@@ -65,13 +68,6 @@ public class GameUi implements KeyListener, IUserInterface{
 
         for (int count = 0; count < gameDimension; count++){
             buttons[count].addKeyListener(this);
-        }
-
-        window.setLayout(borderLayout);
-        jPanel.setLayout(gridLayout);
-
-        for (int count = 0; count< gameDimension; count++){
-            jPanel.add(buttons[count]);
         }
 
         window.add("Center", jPanel);

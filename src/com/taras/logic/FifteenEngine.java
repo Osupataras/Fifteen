@@ -14,7 +14,7 @@ public class FifteenEngine {
 
     private int startZeroWidth = GameDimensions.DISPLAY_X - 1; //Sarting position of zero button
     private int startZeroHeight= GameDimensions.DISPLAY_Y - 1;
-    private int finalZeroWeight; //Position of target button
+    private int finalZeroWidth; //Position of target button
     private int finalZeroHeight;
     private int num = 1; //Counter used to fiil the Array
     private int numberOfMoves = 0;
@@ -36,39 +36,39 @@ public class FifteenEngine {
         // Trying to do some moves by WSAD
         switch (keyPressedLabel) {
             case 'w':
-                finalZeroWeight = startZeroWidth;
+                finalZeroWidth = startZeroWidth;
                 finalZeroHeight = startZeroHeight;
-                finalZeroWeight--;
-                gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWeight][finalZeroHeight];
-                gameMatrix[finalZeroWeight][finalZeroHeight] = 0;
-                startZeroWidth = finalZeroWeight;
+                finalZeroWidth--;
+                gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
+                gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
+                startZeroWidth = finalZeroWidth;
                 startZeroHeight = finalZeroHeight;
                 break;
             case 'd':
-                finalZeroWeight = startZeroWidth;
+                finalZeroWidth = startZeroWidth;
                 finalZeroHeight = startZeroHeight;
                 finalZeroHeight++;
-                gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWeight][finalZeroHeight];
-                gameMatrix[finalZeroWeight][finalZeroHeight] = 0;
-                startZeroWidth = finalZeroWeight;
+                gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
+                gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
+                startZeroWidth = finalZeroWidth;
                 startZeroHeight = finalZeroHeight;
                 break;
             case 's':
-                finalZeroWeight = startZeroWidth;
+                finalZeroWidth = startZeroWidth;
                 finalZeroHeight = startZeroHeight;
-                finalZeroWeight++;
-                gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWeight][finalZeroHeight];
-                gameMatrix[finalZeroWeight][finalZeroHeight] = 0;
-                startZeroWidth = finalZeroWeight;
+                finalZeroWidth++;
+                gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
+                gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
+                startZeroWidth = finalZeroWidth;
                 startZeroHeight = finalZeroHeight;
                 break;
             case 'a':
-                finalZeroWeight = startZeroWidth;
+                finalZeroWidth = startZeroWidth;
                 finalZeroHeight = startZeroHeight;
                 finalZeroHeight--;
-                gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWeight][finalZeroHeight];
-                gameMatrix[finalZeroWeight][finalZeroHeight] = 0;
-                startZeroWidth = finalZeroWeight;
+                gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
+                gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
+                startZeroWidth = finalZeroWidth;
                 startZeroHeight = finalZeroHeight;
                 break;
         }
@@ -91,59 +91,59 @@ public class FifteenEngine {
 
             switch (randomMoveDirection) {
                 case 0:
-                    finalZeroWeight = startZeroWidth;
+                    finalZeroWidth = startZeroWidth;
                     finalZeroHeight = startZeroHeight;
-                    finalZeroWeight--;
-                    if (finalZeroWeight < 0) {
+                    finalZeroWidth--;
+                    if (finalZeroWidth < 0) {
                         continue;
                     }
 
-                    gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWeight][finalZeroHeight];
-                    gameMatrix[finalZeroWeight][finalZeroHeight] = 0;
-                    startZeroWidth = finalZeroWeight;
+                    gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
+                    gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
+                    startZeroWidth = finalZeroWidth;
                     startZeroHeight = finalZeroHeight;
                     break;
 
                 case 1:
-                    finalZeroWeight = startZeroWidth;
+                    finalZeroWidth = startZeroWidth;
                     finalZeroHeight = startZeroHeight;
                     finalZeroHeight++;
                     if (finalZeroHeight > GameDimensions.DISPLAY_X - 1) {
                         continue;
                     }
 
-                    gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWeight][finalZeroHeight];
-                    gameMatrix[finalZeroWeight][finalZeroHeight] = 0;
-                    startZeroWidth = finalZeroWeight;
+                    gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
+                    gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
+                    startZeroWidth = finalZeroWidth;
                     startZeroHeight = finalZeroHeight;
                     break;
 
                 case 2:
-                    finalZeroWeight = startZeroWidth;
+                    finalZeroWidth = startZeroWidth;
                     finalZeroHeight = startZeroHeight;
-                    finalZeroWeight++;
-                    if (finalZeroWeight > GameDimensions.DISPLAY_Y - 1) {
+                    finalZeroWidth++;
+                    if (finalZeroWidth > GameDimensions.DISPLAY_Y - 1) {
                         continue;
                     }
 
-                    gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWeight][finalZeroHeight];
-                    gameMatrix[finalZeroWeight][finalZeroHeight] = 0;
-                    startZeroWidth = finalZeroWeight;
+                    gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
+                    gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
+                    startZeroWidth = finalZeroWidth;
                     startZeroHeight = finalZeroHeight;
 
                     break;
 
                 case 3:
-                    finalZeroWeight = startZeroWidth;
+                    finalZeroWidth = startZeroWidth;
                     finalZeroHeight = startZeroHeight;
                     finalZeroHeight--;
                     if (finalZeroHeight < 0) {
                         continue;
                     }
 
-                    gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWeight][finalZeroHeight];
-                    gameMatrix[finalZeroWeight][finalZeroHeight] = 0;
-                    startZeroWidth = finalZeroWeight;
+                    gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
+                    gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
+                    startZeroWidth = finalZeroWidth;
                     startZeroHeight = finalZeroHeight;
                     break;
             }
@@ -152,8 +152,11 @@ public class FifteenEngine {
     }
 
     public Integer getMatrixElement(int x, int y) {
+
         return gameMatrix[x][y];
+
     }
+
 }
 
 

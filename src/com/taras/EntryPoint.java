@@ -8,6 +8,8 @@ import com.taras.ui.GameUi;
 public class EntryPoint {
 
     public static void main(String... args) {
+
         new GameUi().start();
+
     }
 }
