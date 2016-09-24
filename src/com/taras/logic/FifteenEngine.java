@@ -12,10 +12,10 @@ public class FifteenEngine {
 
     private Random random = new Random();
 
-    private int startZeroWidth = GameDimensions.DISPLAY_X - 1; //Sarting position of zero button
-    private int startZeroHeight= GameDimensions.DISPLAY_Y - 1;
-    private int finalZeroWidth; //Position of target button
-    private int finalZeroHeight;
+    private int startZeroX = GameDimensions.DISPLAY_X - 1; //Sarting position of zero button
+    private int startZeroY = GameDimensions.DISPLAY_Y - 1;
+    private int finalZeroX; //Position of target button
+    private int finalZeroY;
     private int num = 1; //Counter used to fiil the Array
     private int numberOfMoves = 0;
     private int gameMatrix[][];
@@ -35,41 +35,46 @@ public class FifteenEngine {
 
         // Trying to do some moves by WSAD
         switch (keyPressedLabel) {
-            case 'w':
-                finalZeroWidth = startZeroWidth;
-                finalZeroHeight = startZeroHeight;
-                finalZeroWidth--;
-                gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
-                gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
-                startZeroWidth = finalZeroWidth;
-                startZeroHeight = finalZeroHeight;
+
+            case 'a':
+                if (finalZeroY>0){
+                finalZeroY = startZeroY;
+                finalZeroX = startZeroX;
+                finalZeroY--;
+                gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
+                gameMatrix[finalZeroY][finalZeroX] = 0;
+                startZeroY = finalZeroY;
+                startZeroX = finalZeroX;}
                 break;
             case 'd':
-                finalZeroWidth = startZeroWidth;
-                finalZeroHeight = startZeroHeight;
-                finalZeroHeight++;
-                gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
-                gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
-                startZeroWidth = finalZeroWidth;
-                startZeroHeight = finalZeroHeight;
+                if (finalZeroX<3){
+                finalZeroY = startZeroY;
+                finalZeroX = startZeroX;
+                finalZeroX++;
+                gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
+                gameMatrix[finalZeroY][finalZeroX] = 0;
+                startZeroY = finalZeroY;
+                startZeroX = finalZeroX;}
                 break;
             case 's':
-                finalZeroWidth = startZeroWidth;
-                finalZeroHeight = startZeroHeight;
-                finalZeroWidth++;
-                gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
-                gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
-                startZeroWidth = finalZeroWidth;
-                startZeroHeight = finalZeroHeight;
+               if (finalZeroY<3){
+                finalZeroY = startZeroY;
+                finalZeroX = startZeroX;
+                finalZeroY++;
+                gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
+                gameMatrix[finalZeroY][finalZeroX] = 0;
+                startZeroY = finalZeroY;
+                startZeroX = finalZeroX;}
                 break;
-            case 'a':
-                finalZeroWidth = startZeroWidth;
-                finalZeroHeight = startZeroHeight;
-                finalZeroHeight--;
-                gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
-                gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
-                startZeroWidth = finalZeroWidth;
-                startZeroHeight = finalZeroHeight;
+            case 'w':
+                if (finalZeroX<0){
+                finalZeroY = startZeroY;
+                finalZeroX = startZeroX;
+                finalZeroX--;
+                gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
+                gameMatrix[finalZeroY][finalZeroX] = 0;
+                startZeroY = finalZeroY;
+                startZeroX = finalZeroX;}
                 break;
         }
     }
@@ -82,7 +87,7 @@ public class FifteenEngine {
                 gameMatrix[p][k] = num++;
             }
         }
-        gameMatrix[startZeroWidth][startZeroHeight] = 0;
+        gameMatrix[startZeroY][startZeroX] = 0;
 
         // Random moves by swapping them (4 direction)
         do {
@@ -91,60 +96,60 @@ public class FifteenEngine {
 
             switch (randomMoveDirection) {
                 case 0:
-                    finalZeroWidth = startZeroWidth;
-                    finalZeroHeight = startZeroHeight;
-                    finalZeroWidth--;
-                    if (finalZeroWidth < 0) {
+                    finalZeroY = startZeroY;
+                    finalZeroX = startZeroX;
+                    finalZeroY--;
+                    if (finalZeroY < 0) {
                         continue;
                     }
 
-                    gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
-                    gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
-                    startZeroWidth = finalZeroWidth;
-                    startZeroHeight = finalZeroHeight;
+                    gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
+                    gameMatrix[finalZeroY][finalZeroX] = 0;
+                    startZeroY = finalZeroY;
+                    startZeroX = finalZeroX;
                     break;
 
                 case 1:
-                    finalZeroWidth = startZeroWidth;
-                    finalZeroHeight = startZeroHeight;
-                    finalZeroHeight++;
-                    if (finalZeroHeight > GameDimensions.DISPLAY_X - 1) {
+                    finalZeroY = startZeroY;
+                    finalZeroX = startZeroX;
+                    finalZeroX++;
+                    if (finalZeroX > GameDimensions.DISPLAY_X - 1) {
                         continue;
                     }
 
-                    gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
-                    gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
-                    startZeroWidth = finalZeroWidth;
-                    startZeroHeight = finalZeroHeight;
+                    gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
+                    gameMatrix[finalZeroY][finalZeroX] = 0;
+                    startZeroY = finalZeroY;
+                    startZeroX = finalZeroX;
                     break;
 
                 case 2:
-                    finalZeroWidth = startZeroWidth;
-                    finalZeroHeight = startZeroHeight;
-                    finalZeroWidth++;
-                    if (finalZeroWidth > GameDimensions.DISPLAY_Y - 1) {
+                    finalZeroY = startZeroY;
+                    finalZeroX = startZeroX;
+                    finalZeroY++;
+                    if (finalZeroY > GameDimensions.DISPLAY_Y - 1) {
                         continue;
                     }
 
-                    gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
-                    gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
-                    startZeroWidth = finalZeroWidth;
-                    startZeroHeight = finalZeroHeight;
+                    gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
+                    gameMatrix[finalZeroY][finalZeroX] = 0;
+                    startZeroY = finalZeroY;
+                    startZeroX = finalZeroX;
 
                     break;
 
                 case 3:
-                    finalZeroWidth = startZeroWidth;
-                    finalZeroHeight = startZeroHeight;
-                    finalZeroHeight--;
-                    if (finalZeroHeight < 0) {
+                    finalZeroY = startZeroY;
+                    finalZeroX = startZeroX;
+                    finalZeroX--;
+                    if (finalZeroX < 0) {
                         continue;
                     }
 
-                    gameMatrix[startZeroWidth][startZeroHeight] = gameMatrix[finalZeroWidth][finalZeroHeight];
-                    gameMatrix[finalZeroWidth][finalZeroHeight] = 0;
-                    startZeroWidth = finalZeroWidth;
-                    startZeroHeight = finalZeroHeight;
+                    gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
+                    gameMatrix[finalZeroY][finalZeroX] = 0;
+                    startZeroY = finalZeroY;
+                    startZeroX = finalZeroX;
                     break;
             }
 
