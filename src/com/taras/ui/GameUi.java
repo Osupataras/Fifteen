@@ -79,7 +79,9 @@ public class GameUi implements KeyListener, IUserInterface{
 
     @Override
     public void swapItems(int firstX, int firstY, int secondX, int secondY) {
-        // Place your code here...
+        gameEngine.setGameMatrixElement(firstX,firstY,gameEngine.getMatrixElement(secondX,secondY));
+        gameEngine.setGameMatrixElement(secondX,secondY,0);
+
     }
 
     @Override

@@ -33,7 +33,7 @@ public class FifteenEngine {
 
     public void processPressedKey(char keyPressedLabel) {
 
-        // Trying to do some moves by WSAD
+        // Some moves by WSAD
         switch (keyPressedLabel) {
 
             case 'a':
@@ -47,7 +47,7 @@ public class FifteenEngine {
                 startZeroX = finalZeroX;}
                 break;
             case 'd':
-                if (finalZeroX<3){
+                if (finalZeroX<GameDimensions.DISPLAY_X-1){
                 finalZeroY = startZeroY;
                 finalZeroX = startZeroX;
                 finalZeroX++;
@@ -57,7 +57,7 @@ public class FifteenEngine {
                 startZeroX = finalZeroX;}
                 break;
             case 's':
-               if (finalZeroY<3){
+               if (finalZeroY<GameDimensions.DISPLAY_Y-1){
                 finalZeroY = startZeroY;
                 finalZeroX = startZeroX;
                 finalZeroY++;
@@ -159,9 +159,11 @@ public class FifteenEngine {
     public Integer getMatrixElement(int x, int y) {
 
         return gameMatrix[x][y];
-
     }
 
+    public void setGameMatrixElement(int x,int y,int matrixElement) {
+        gameMatrix[x][y] = matrixElement;
+    }
 }
 
 
