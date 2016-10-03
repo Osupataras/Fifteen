@@ -20,14 +20,14 @@ public class GameUi implements KeyListener, IUserInterface{
     private int num = 0;
 
     // UI components
-    private JButton[] buttons;
+    public JButton[][] buttons;
     private JPanel window;
     private BorderLayout borderLayout;
     private GridLayout gridLayout;
     private JPanel jPanel;
 
     public GameUi() {
-        buttons = new JButton[GameDimensions.DISPLAY_X * GameDimensions.DISPLAY_Y];
+        buttons = new JButton[GameDimensions.DISPLAY_X ][GameDimensions.DISPLAY_Y];
         window = new JPanel();
         borderLayout = new BorderLayout();
         gridLayout = new GridLayout(GameDimensions.DISPLAY_X, GameDimensions.DISPLAY_Y);
@@ -38,13 +38,12 @@ public class GameUi implements KeyListener, IUserInterface{
         gameEngine = new FifteenEngine(this);
         //Shuffle the deck by "count" moves
         gameEngine.createStartState(1000);
-
         setupUi(gameEngine);
+
+
     }
 
     private void setupUi(FifteenEngine fifteenEngine) {
-        int gameDimension = GameDimensions.DISPLAY_X * GameDimensions.DISPLAY_Y;
-
         window.setLayout(borderLayout);
         jPanel.setLayout(gridLayout);
 
@@ -54,20 +53,21 @@ public class GameUi implements KeyListener, IUserInterface{
                 Integer matrixElement = fifteenEngine.getMatrixElement(p, k);
                 String matrixElementLabel = matrixElement.toString();
 
-                buttons[num]=new JButton(matrixElementLabel);
-                buttons[num].setBackground(Color.LIGHT_GRAY);
+                buttons[k][p]=new JButton(matrixElementLabel);
+                buttons[k][p].setBackground(Color.LIGHT_GRAY);
 
                 if (matrixElement==0){
-                    buttons[num].setBackground(Color.BLACK);
+                    buttons[k][p].setBackground(Color.BLACK);
                 }
-                jPanel.add(buttons[num]);
+                jPanel.add(buttons[k][p]);
 
-                num++;
             }
         }
 
-        for (int count = 0; count < gameDimension; count++){
-            buttons[count].addKeyListener(this);
+        for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
+            for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
+                buttons[k][p].addKeyListener(this);
+            }
         }
 
         window.add("Center", jPanel);
@@ -79,9 +79,10 @@ public class GameUi implements KeyListener, IUserInterface{
 
     @Override
     public void swapItems(int firstX, int firstY, int secondX, int secondY) {
-        gameEngine.setGameMatrixElement(firstX,firstY,gameEngine.getMatrixElement(secondX,secondY));
-        gameEngine.setGameMatrixElement(secondX,secondY,0);
-
+        gameEngine.setGameMatrixElement(secondX,secondY,gameEngine.getMatrixElement(firstX,firstY));
+        gameEngine.setGameMatrixElement(firstX,firstY,0);
+        buttons[secondX][secondY].setText(""+gameEngine.getMatrixElement(secondX,secondY));
+        buttons[firstX][firstY].setText(""+gameEngine.getMatrixElement(firstX,firstY));
     }
 
     @Override

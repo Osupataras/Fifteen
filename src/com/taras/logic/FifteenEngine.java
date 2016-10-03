@@ -1,34 +1,40 @@
 package com.taras.logic;
 
 import com.taras.config.GameDimensions;
+import com.taras.ui.GameUi;
 import com.taras.ui.IUserInterface;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Random;
 
 /**
  * Created by Taras on 21.09.2016.
  */
-public class FifteenEngine {
+public class FifteenEngine{
 
     private Random random = new Random();
 
     private int startZeroX = GameDimensions.DISPLAY_X - 1; //Sarting position of zero button
     private int startZeroY = GameDimensions.DISPLAY_Y - 1;
-    private int finalZeroX; //Position of target button
-    private int finalZeroY;
+    private int finalZeroX=1; //Position of target button
+    private int finalZeroY=1;
     private int num = 1; //Counter used to fiil the Array
     private int numberOfMoves = 0;
     private int gameMatrix[][];
+    GameUi gameUi =new GameUi();
+
+
 
     /**
      * Call the {@link IUserInterface#swapItems(int, int, int, int)} method of this object to
      * swap items inside the UI.
      */
-    private IUserInterface gameUi;
+    public IUserInterface iUserInterface;
 
     public FifteenEngine(IUserInterface userInterface)  {
         gameMatrix = new int[GameDimensions.DISPLAY_X][GameDimensions.DISPLAY_Y];
-        gameUi = userInterface;
+        this.iUserInterface = userInterface;
     }
 
     public void processPressedKey(char keyPressedLabel) {
@@ -37,44 +43,56 @@ public class FifteenEngine {
         switch (keyPressedLabel) {
 
             case 'a':
+                System.out.println("a");
                 if (finalZeroY>0){
                 finalZeroY = startZeroY;
                 finalZeroX = startZeroX;
                 finalZeroY--;
                 gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                 gameMatrix[finalZeroY][finalZeroX] = 0;
+                gameUi.buttons[startZeroX][startZeroY].setText(""+gameMatrix[startZeroX][startZeroY]);
                 startZeroY = finalZeroY;
-                startZeroX = finalZeroX;}
+                startZeroX = finalZeroX;
+                iUserInterface.swapItems(startZeroX,startZeroY,finalZeroX,finalZeroY);}
                 break;
-            case 'd':
-                if (finalZeroX<GameDimensions.DISPLAY_X-1){
+            case 's':
+                System.out.println("s");
+                if (finalZeroX<3){
                 finalZeroY = startZeroY;
                 finalZeroX = startZeroX;
                 finalZeroX++;
                 gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                 gameMatrix[finalZeroY][finalZeroX] = 0;
+                gameUi.buttons[startZeroX][startZeroY].setText(""+gameMatrix[startZeroX][startZeroY]);
                 startZeroY = finalZeroY;
-                startZeroX = finalZeroX;}
+                startZeroX = finalZeroX;
+                iUserInterface.swapItems(startZeroX,startZeroY,finalZeroX,finalZeroY);}
                 break;
-            case 's':
-               if (finalZeroY<GameDimensions.DISPLAY_Y-1){
+            case 'd':
+                System.out.println("d");
+               if (finalZeroY<3){
                 finalZeroY = startZeroY;
                 finalZeroX = startZeroX;
                 finalZeroY++;
                 gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                 gameMatrix[finalZeroY][finalZeroX] = 0;
+                gameUi.buttons[startZeroX][startZeroY].setText(""+gameMatrix[startZeroX][startZeroY]);
                 startZeroY = finalZeroY;
-                startZeroX = finalZeroX;}
+                startZeroX = finalZeroX;
+                iUserInterface.swapItems(startZeroX,startZeroY,finalZeroX,finalZeroY);}
                 break;
             case 'w':
+                System.out.println("w");
                 if (finalZeroX<0){
                 finalZeroY = startZeroY;
                 finalZeroX = startZeroX;
                 finalZeroX--;
                 gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                 gameMatrix[finalZeroY][finalZeroX] = 0;
+                gameUi.buttons[startZeroX][startZeroY].setText(""+gameMatrix[startZeroX][startZeroY]);
                 startZeroY = finalZeroY;
-                startZeroX = finalZeroX;}
+                startZeroX = finalZeroX;
+                iUserInterface.swapItems(startZeroX,startZeroY,finalZeroX,finalZeroY);}
                 break;
         }
     }
@@ -102,7 +120,6 @@ public class FifteenEngine {
                     if (finalZeroY < 0) {
                         continue;
                     }
-
                     gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                     gameMatrix[finalZeroY][finalZeroX] = 0;
                     startZeroY = finalZeroY;
@@ -116,7 +133,6 @@ public class FifteenEngine {
                     if (finalZeroX > GameDimensions.DISPLAY_X - 1) {
                         continue;
                     }
-
                     gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                     gameMatrix[finalZeroY][finalZeroX] = 0;
                     startZeroY = finalZeroY;
@@ -130,7 +146,6 @@ public class FifteenEngine {
                     if (finalZeroY > GameDimensions.DISPLAY_Y - 1) {
                         continue;
                     }
-
                     gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                     gameMatrix[finalZeroY][finalZeroX] = 0;
                     startZeroY = finalZeroY;
@@ -145,7 +160,6 @@ public class FifteenEngine {
                     if (finalZeroX < 0) {
                         continue;
                     }
-
                     gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                     gameMatrix[finalZeroY][finalZeroX] = 0;
                     startZeroY = finalZeroY;
@@ -162,8 +176,10 @@ public class FifteenEngine {
     }
 
     public void setGameMatrixElement(int x,int y,int matrixElement) {
+
         gameMatrix[x][y] = matrixElement;
     }
+
 }
 
 
