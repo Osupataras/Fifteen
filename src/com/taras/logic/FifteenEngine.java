@@ -17,8 +17,8 @@ public class FifteenEngine{
 
     private int startZeroX = GameDimensions.DISPLAY_X - 1; //Sarting position of zero button
     private int startZeroY = GameDimensions.DISPLAY_Y - 1;
-    private int finalZeroX=1; //Position of target button
-    private int finalZeroY=1;
+    private int finalZeroX = 0; //Position of target button
+    private int finalZeroY = 0;
     private int num = 1; //Counter used to fiil the Array
     private int numberOfMoves = 0;
     private int gameMatrix[][];
@@ -32,9 +32,12 @@ public class FifteenEngine{
      */
     public IUserInterface iUserInterface;
 
-    public FifteenEngine(IUserInterface userInterface)  {
+    public void registerSwapItems(IUserInterface iUserInterface){
+        this.iUserInterface = iUserInterface;
+    }
+
+    public FifteenEngine()  {
         gameMatrix = new int[GameDimensions.DISPLAY_X][GameDimensions.DISPLAY_Y];
-        this.iUserInterface = userInterface;
     }
 
     public void processPressedKey(char keyPressedLabel) {
@@ -43,56 +46,60 @@ public class FifteenEngine{
         switch (keyPressedLabel) {
 
             case 'a':
-                System.out.println("a");
-                if (finalZeroY>0){
+                soutGameMatrix();
+                if (startZeroY>0){
                 finalZeroY = startZeroY;
                 finalZeroX = startZeroX;
                 finalZeroY--;
                 gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                 gameMatrix[finalZeroY][finalZeroX] = 0;
-                gameUi.buttons[startZeroX][startZeroY].setText(""+gameMatrix[startZeroX][startZeroY]);
+
+//                gameUi.buttons[startZeroY][startZeroX].setText(getMatrixElement(startZeroY,startZeroX).toString());
                 startZeroY = finalZeroY;
                 startZeroX = finalZeroX;
-                iUserInterface.swapItems(startZeroX,startZeroY,finalZeroX,finalZeroY);}
+                    System.out.println();
+                }
+
                 break;
             case 's':
-                System.out.println("s");
-                if (finalZeroX<3){
+                soutGameMatrix();
+                if (startZeroX<3){
                 finalZeroY = startZeroY;
                 finalZeroX = startZeroX;
                 finalZeroX++;
                 gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                 gameMatrix[finalZeroY][finalZeroX] = 0;
-                gameUi.buttons[startZeroX][startZeroY].setText(""+gameMatrix[startZeroX][startZeroY]);
+
+//                gameUi.buttons[startZeroY][startZeroX].setText(getMatrixElement(startZeroY,startZeroX).toString());
                 startZeroY = finalZeroY;
                 startZeroX = finalZeroX;
-                iUserInterface.swapItems(startZeroX,startZeroY,finalZeroX,finalZeroY);}
+                }
                 break;
             case 'd':
-                System.out.println("d");
-               if (finalZeroY<3){
+                soutGameMatrix();
+                if (startZeroY<3){
                 finalZeroY = startZeroY;
                 finalZeroX = startZeroX;
                 finalZeroY++;
                 gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                 gameMatrix[finalZeroY][finalZeroX] = 0;
-                gameUi.buttons[startZeroX][startZeroY].setText(""+gameMatrix[startZeroX][startZeroY]);
+//                gameUi.buttons[startZeroY][startZeroX].setText(getMatrixElement(startZeroY,startZeroX).toString());
                 startZeroY = finalZeroY;
                 startZeroX = finalZeroX;
-                iUserInterface.swapItems(startZeroX,startZeroY,finalZeroX,finalZeroY);}
+                }
                 break;
             case 'w':
-                System.out.println("w");
-                if (finalZeroX<0){
+                soutGameMatrix();
+                if (startZeroX>0){
                 finalZeroY = startZeroY;
                 finalZeroX = startZeroX;
                 finalZeroX--;
                 gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                 gameMatrix[finalZeroY][finalZeroX] = 0;
-                gameUi.buttons[startZeroX][startZeroY].setText(""+gameMatrix[startZeroX][startZeroY]);
+//                gameUi.buttons[startZeroY][startZeroX].setText(getMatrixElement(startZeroY,startZeroX).toString());
                 startZeroY = finalZeroY;
                 startZeroX = finalZeroX;
-                iUserInterface.swapItems(startZeroX,startZeroY,finalZeroX,finalZeroY);}
+                }
                 break;
         }
     }
@@ -168,6 +175,16 @@ public class FifteenEngine{
             }
 
         } while (numberOfMoves < maxMoveNumber);
+        System.out.println(""+startZeroY+""+startZeroX);
+    }
+    public void soutGameMatrix(){
+        for (int i=0;i<gameMatrix.length;i++){
+            System.out.println("");
+            for (int j=0;j<gameMatrix.length;j++){
+                System.out.print(gameMatrix[j][i]+" w");
+            }
+        }
+
     }
 
     public Integer getMatrixElement(int x, int y) {
