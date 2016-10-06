@@ -85,8 +85,8 @@ public class GameUi implements KeyListener, IUserInterface{
 
     @Override
     public void swapItems(int firstX, int firstY, int secondX, int secondY) {
-        buttons[secondY][secondX].setText(buttons[firstY][firstX].getText());
-        buttons[firstY][firstX].setText(""+0);
+        buttons[secondY][secondX].setText(buttons[firstY][firstX].getText().toString());
+        buttons[firstY][firstX].setText("0");
     }
 
     @Override
@@ -97,6 +97,7 @@ public class GameUi implements KeyListener, IUserInterface{
     @Override
     public void keyPressed(KeyEvent e) {
         gameEngine.processPressedKey(e.getKeyChar());
+
     }
 
     @Override

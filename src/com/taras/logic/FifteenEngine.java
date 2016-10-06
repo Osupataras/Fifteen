@@ -32,6 +32,8 @@ public class FifteenEngine{
      */
     public IUserInterface iUserInterface;
 
+
+
     public void registerSwapItems(IUserInterface iUserInterface){
         this.iUserInterface = iUserInterface;
     }
@@ -54,8 +56,7 @@ public class FifteenEngine{
                 finalZeroY--;
                 gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                 gameMatrix[finalZeroY][finalZeroX] = 0;
-
-
+//                iUserInterface.swapItems(startZeroY,startZeroX,finalZeroY,finalZeroX);
                 startZeroY = finalZeroY;
                 startZeroX = finalZeroX;
                 }
