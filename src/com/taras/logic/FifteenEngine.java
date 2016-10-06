@@ -4,6 +4,7 @@ import com.taras.config.GameDimensions;
 import com.taras.ui.GameUi;
 import com.taras.ui.IUserInterface;
 
+import javax.swing.*;
 import java.util.Random;
 
 /**
@@ -86,7 +87,7 @@ public class FifteenEngine{
             numberOfMoves++;
 
             switch (randomMoveDirection) {
-                case 0:
+                case 0 :
                     finalZeroY = startZeroY;
                     finalZeroX = startZeroX;
                     finalZeroY--;
@@ -148,12 +149,30 @@ public class FifteenEngine{
         gameMatrix[startZeroX][startZeroY] = gameMatrix[finalZeroX][finalZeroY];
         gameMatrix[finalZeroX][finalZeroY] = 0;
         iUserInterface.swapItems(startZeroX,startZeroY,finalZeroX,finalZeroY);
+        winConforming();
 
     }
 
     public Integer getMatrixElement(int x, int y) {
 
         return gameMatrix[x][y];
+    }
+
+    public void winConforming(){
+        num = 1;
+        for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
+            for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
+                if (getMatrixElement(p,k) == num){
+                    num++;
+                }
+            }
+        }
+        if(num==GameDimensions.DISPLAY_X*GameDimensions.DISPLAY_Y){
+            System.out.println(""+num);
+            JOptionPane.showMessageDialog(null,"Победа!");
+
+        }
+
     }
 
 }

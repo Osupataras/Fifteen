@@ -19,7 +19,7 @@ public class GameUi implements KeyListener, IUserInterface{
 
     private GameUi gameUi;
 
-    private int num = 0;
+
 
     // UI components
     public JButton[][] buttons;
@@ -42,7 +42,8 @@ public class GameUi implements KeyListener, IUserInterface{
         gameEngine.createStartState(1000);
         setupUi(gameEngine);
 
-        gameEngine.registerSwapItems(this);
+
+
 
     }
 
@@ -79,7 +80,10 @@ public class GameUi implements KeyListener, IUserInterface{
         frame.setContentPane(window);
         frame.pack();
         frame.setVisible(true);
+
     }
+
+
 
     @Override
     public void swapItems(int firstX, int firstY, int secondX, int secondY) {
@@ -87,6 +91,7 @@ public class GameUi implements KeyListener, IUserInterface{
         buttons[firstX][firstY].setBackground(Color.LIGHT_GRAY);
         buttons[secondX][secondY].setText("");
         buttons[secondX][secondY].setBackground(Color.BLACK);
+
 
     }
 
