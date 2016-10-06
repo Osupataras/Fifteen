@@ -55,7 +55,7 @@ public class FifteenEngine{
                 gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                 gameMatrix[finalZeroY][finalZeroX] = 0;
 
-//                gameUi.buttons[startZeroY][startZeroX].setText(getMatrixElement(startZeroY,startZeroX).toString());
+
                 startZeroY = finalZeroY;
                 startZeroX = finalZeroX;
                 }
@@ -69,7 +69,7 @@ public class FifteenEngine{
                 finalZeroX++;
                 gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                 gameMatrix[finalZeroY][finalZeroX] = 0;
-//                gameUi.buttons[startZeroY][startZeroX].setText(getMatrixElement(startZeroY,startZeroX).toString());
+
                 startZeroY = finalZeroY;
                 startZeroX = finalZeroX;
                 }
@@ -84,7 +84,7 @@ public class FifteenEngine{
                 finalZeroY++;
                 gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                 gameMatrix[finalZeroY][finalZeroX] = 0;
-//                gameUi.buttons[startZeroY][startZeroX].setText(getMatrixElement(startZeroY,startZeroX).toString());
+
                 startZeroY = finalZeroY;
                 startZeroX = finalZeroX;
                 }
@@ -98,7 +98,7 @@ public class FifteenEngine{
                 finalZeroX--;
                 gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                 gameMatrix[finalZeroY][finalZeroX] = 0;
-//                gameUi.buttons[startZeroY][startZeroX].setText(getMatrixElement(startZeroY,startZeroX).toString());
+
                 startZeroY = finalZeroY;
                 startZeroX = finalZeroX;
                 }
