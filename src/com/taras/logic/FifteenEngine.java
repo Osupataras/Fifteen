@@ -4,8 +4,6 @@ import com.taras.config.GameDimensions;
 import com.taras.ui.GameUi;
 import com.taras.ui.IUserInterface;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.util.Random;
 
 /**
@@ -51,7 +49,7 @@ public class FifteenEngine{
             case 'a':
 
                 if (startZeroY>0){
-                    swapMatrixElement(startZeroY,startZeroX,startZeroY-1,startZeroX);
+                    swapMatrixElements(startZeroY,startZeroX,startZeroY-1,startZeroX);
                     gameUi.swapItems(startZeroY,startZeroX,startZeroY-1,startZeroX);
                     startZeroY--;
 
@@ -60,7 +58,7 @@ public class FifteenEngine{
                 break;
             case 's':
                 if (startZeroX<3) {
-                    swapMatrixElement(startZeroY, startZeroX, startZeroY, startZeroX+1);
+                    swapMatrixElements(startZeroY, startZeroX, startZeroY, startZeroX+1);
                     gameUi.swapItems(startZeroY, startZeroX, startZeroY, startZeroX+1);
                     startZeroX++;
                 }
@@ -69,7 +67,7 @@ public class FifteenEngine{
                 break;
             case 'd':
                 if (startZeroY<3){
-                    swapMatrixElement(startZeroY, startZeroX, startZeroY+1, startZeroX);
+                    swapMatrixElements(startZeroY, startZeroX, startZeroY+1, startZeroX);
                     gameUi.swapItems(startZeroY, startZeroX, startZeroY+1, startZeroX);
                     startZeroY++;
                }
@@ -78,7 +76,7 @@ public class FifteenEngine{
                 break;
             case 'w':
                 if (startZeroX>0){
-                    swapMatrixElement(startZeroY, startZeroX, startZeroY, startZeroX-1);
+                    swapMatrixElements(startZeroY, startZeroX, startZeroY, startZeroX-1);
                     gameUi.swapItems(startZeroY, startZeroX, startZeroY, startZeroX-1);
                     startZeroX--;
                 }
@@ -170,7 +168,7 @@ public class FifteenEngine{
         }
 
     }
-    private void swapMatrixElement(int startZeroY,int startZeroX, int finalZeroY, int finalZeroX){
+    private void swapMatrixElements(int startZeroY, int startZeroX, int finalZeroY, int finalZeroX){
         gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
         gameMatrix[finalZeroY][finalZeroX] = 0;
 
