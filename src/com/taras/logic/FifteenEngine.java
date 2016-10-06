@@ -20,8 +20,6 @@ public class FifteenEngine{
     private int num = 1; //Counter used to fiil the Array
     private int numberOfMoves = 0;
     private int gameMatrix[][];
-    GameUi gameUi =new GameUi();
-
 
 
     /**
@@ -29,8 +27,6 @@ public class FifteenEngine{
      * swap items inside the UI.
      */
     public IUserInterface iUserInterface;
-
-
 
     public void registerSwapItems(IUserInterface iUserInterface){
         this.iUserInterface = iUserInterface;
@@ -46,42 +42,30 @@ public class FifteenEngine{
         // Some moves by WSAD
         switch (keyPressedLabel) {
 
-            case 'a':
+            case 'w':
 
                 if (startZeroX>0){
                     swapMatrixElements(startZeroX,startZeroY,startZeroX-1,startZeroY);
-                    gameUi.swapItems(startZeroX,startZeroY,startZeroX-1,startZeroY);
                     startZeroX--;
-
                 }
-                soutGameMatrix();
-                break;
-            case 's':
-                if (startZeroY<3) {
-                    swapMatrixElements(startZeroX,startZeroY,startZeroX,startZeroY+1);
-                    gameUi.swapItems(startZeroX,startZeroY,startZeroX,startZeroY+1);
-                    startZeroY++;
-                }
-                soutGameMatrix();
-
                 break;
             case 'd':
+                if (startZeroY<3) {
+                    swapMatrixElements(startZeroX,startZeroY,startZeroX,startZeroY+1);
+                    startZeroY++;
+                }
+                break;
+            case 's':
                 if (startZeroX<3){
                     swapMatrixElements(startZeroX,startZeroY,startZeroX+1,startZeroY);
-                    gameUi.swapItems(startZeroX,startZeroY,startZeroX+1,startZeroY);
                     startZeroX++;
                }
-                soutGameMatrix();
-
                 break;
-            case 'w':
+            case 'a':
                 if (startZeroY>0){
                     swapMatrixElements(startZeroX,startZeroY,startZeroX,startZeroY-1);
-                    gameUi.swapItems(startZeroX,startZeroY,startZeroX,startZeroY-1);
                     startZeroY--;
                 }
-                soutGameMatrix();
-
                 break;
         }
     }
@@ -154,34 +138,22 @@ public class FifteenEngine{
                     startZeroY = finalZeroY;
                     startZeroX = finalZeroX;
                     break;
-            }
+                }
 
         } while (numberOfMoves < maxMoveNumber);
-        System.out.println(""+startZeroX+""+startZeroY);
-    }
-    public void soutGameMatrix(){
-        for (int i=0;i<gameMatrix.length;i++){
-            System.out.println("");
-            for (int j=0;j<gameMatrix.length;j++){
-                System.out.print(gameMatrix[j][i]+" ");
-            }
-        }
 
     }
+
     private void swapMatrixElements(int startZeroX, int startZeroY, int finalZeroX, int finalZeroY){
         gameMatrix[startZeroX][startZeroY] = gameMatrix[finalZeroX][finalZeroY];
         gameMatrix[finalZeroX][finalZeroY] = 0;
+        iUserInterface.swapItems(startZeroX,startZeroY,finalZeroX,finalZeroY);
 
     }
 
     public Integer getMatrixElement(int x, int y) {
 
         return gameMatrix[x][y];
-    }
-
-    public void setGameMatrixElement(int x,int y,int matrixElement) {
-
-        gameMatrix[x][y] = matrixElement;
     }
 
 }
