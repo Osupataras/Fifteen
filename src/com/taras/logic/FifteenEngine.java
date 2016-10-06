@@ -36,7 +36,8 @@ public class FifteenEngine{
         this.iUserInterface = iUserInterface;
     }
 
-    public FifteenEngine()  {
+    public FifteenEngine(IUserInterface iUserInterface)  {
+        this.iUserInterface = iUserInterface;
         gameMatrix = new int[GameDimensions.DISPLAY_X][GameDimensions.DISPLAY_Y];
     }
 
@@ -46,7 +47,7 @@ public class FifteenEngine{
         switch (keyPressedLabel) {
 
             case 'a':
-                soutGameMatrix();
+
                 if (startZeroY>0){
                 finalZeroY = startZeroY;
                 finalZeroX = startZeroX;
@@ -57,26 +58,26 @@ public class FifteenEngine{
 //                gameUi.buttons[startZeroY][startZeroX].setText(getMatrixElement(startZeroY,startZeroX).toString());
                 startZeroY = finalZeroY;
                 startZeroX = finalZeroX;
-                    System.out.println();
                 }
-
+                soutGameMatrix();
                 break;
             case 's':
-                soutGameMatrix();
+
                 if (startZeroX<3){
                 finalZeroY = startZeroY;
                 finalZeroX = startZeroX;
                 finalZeroX++;
                 gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
                 gameMatrix[finalZeroY][finalZeroX] = 0;
-
 //                gameUi.buttons[startZeroY][startZeroX].setText(getMatrixElement(startZeroY,startZeroX).toString());
                 startZeroY = finalZeroY;
                 startZeroX = finalZeroX;
                 }
+                soutGameMatrix();
+
                 break;
             case 'd':
-                soutGameMatrix();
+
                 if (startZeroY<3){
                 finalZeroY = startZeroY;
                 finalZeroX = startZeroX;
@@ -87,9 +88,10 @@ public class FifteenEngine{
                 startZeroY = finalZeroY;
                 startZeroX = finalZeroX;
                 }
+                soutGameMatrix();
+
                 break;
             case 'w':
-                soutGameMatrix();
                 if (startZeroX>0){
                 finalZeroY = startZeroY;
                 finalZeroX = startZeroX;
@@ -100,6 +102,8 @@ public class FifteenEngine{
                 startZeroY = finalZeroY;
                 startZeroX = finalZeroX;
                 }
+                soutGameMatrix();
+
                 break;
         }
     }
@@ -181,7 +185,7 @@ public class FifteenEngine{
         for (int i=0;i<gameMatrix.length;i++){
             System.out.println("");
             for (int j=0;j<gameMatrix.length;j++){
-                System.out.print(gameMatrix[j][i]+" w");
+                System.out.print(gameMatrix[j][i]+" ");
             }
         }
 

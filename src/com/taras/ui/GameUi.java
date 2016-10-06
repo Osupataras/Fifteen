@@ -36,12 +36,13 @@ public class GameUi implements KeyListener, IUserInterface{
     }
 
     public void start() {
-        gameEngine = new FifteenEngine();
-        gameUi = new GameUi();
+        gameEngine = new FifteenEngine(gameUi);
         //Shuffle the deck by "count" moves
         gameEngine.createStartState(1000);
-        gameEngine.registerSwapItems(gameUi);
         setupUi(gameEngine);
+        gameEngine.registerSwapItems(gameUi);
+
+
 
 
 
@@ -84,8 +85,8 @@ public class GameUi implements KeyListener, IUserInterface{
 
     @Override
     public void swapItems(int firstX, int firstY, int secondX, int secondY) {
-        buttons[secondX][secondY].setText(""+gameEngine.getMatrixElement(firstX,firstY));
-        buttons[firstX][firstY].setText(""+0);
+        buttons[secondY][secondX].setText(buttons[firstY][firstX].getText());
+        buttons[firstY][firstX].setText(""+0);
     }
 
     @Override
