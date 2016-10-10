@@ -154,6 +154,7 @@ public class FifteenEngine{
     }
 
     public void newGame(){
+        createStartState(1000);
         iUserInterface.setNewGame(gameMatrix);
     }
 
