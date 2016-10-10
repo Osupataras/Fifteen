@@ -5,6 +5,8 @@ import com.taras.logic.FifteenEngine;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -30,6 +32,7 @@ public class GameUi implements KeyListener, IUserInterface{
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenuItem menuNewGame, menuSaveGame, menuLoadGame, menuExit;
+    JFrame frame = new JFrame("FifteenGameCore");
 
 
 
@@ -46,7 +49,6 @@ public class GameUi implements KeyListener, IUserInterface{
     public void start() {
         gameEngine = new FifteenEngine(this);
         //Shuffle the deck by "count" moves
-        gameEngine.createStartState(1000);
         setupUi(gameEngine);
 
 
@@ -94,10 +96,28 @@ public class GameUi implements KeyListener, IUserInterface{
         menu.add(menuExit);
         menuBar.add(menu);
 
+        menuExit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        } );
+
+        menuNewGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameEngine.newGame();
+
+            }
+        });
+
+
         window.add("Center", jPanel);
-        JFrame frame = new JFrame("FifteenGameCore");
+
         frame.setContentPane(window);
         frame.setJMenuBar(menuBar);
+        frame.setPreferredSize(new Dimension(300, 300));
+        frame.setLocation(400, 400);
         frame.pack();
         frame.setVisible(true);
 
@@ -114,6 +134,26 @@ public class GameUi implements KeyListener, IUserInterface{
 
 
     }
+
+    @Override
+    public void setNewGame(int gameMatrix[][]) {
+        for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
+            for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
+                Integer gameMatrixElement = gameMatrix[p][k];
+                String gameMatrixElementLabel = gameMatrixElement.toString();
+                buttons[k][p].setText(gameMatrixElementLabel);
+                buttons[k][p].setBackground(Color.LIGHT_GRAY);
+
+            if (gameMatrix[k][p]==0){
+                buttons[k][p].setBackground(Color.BLACK);
+                buttons[k][p].setText("");
+            }
+
+        }
+    }
+    }
+
+
 
     @Override
     public void keyTyped(KeyEvent e) {

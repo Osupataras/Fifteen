@@ -17,4 +17,5 @@ public interface IUserInterface {
      * @param secondY   Y coordinate of the second item to swap.
      */
     void swapItems(int firstX, int firstY, int secondX, int secondY);
+    void setNewGame(int gameMatrix[][]);
 }

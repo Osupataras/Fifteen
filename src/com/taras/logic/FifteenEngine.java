@@ -153,6 +153,10 @@ public class FifteenEngine{
 
     }
 
+    public void newGame(){
+        iUserInterface.setNewGame(gameMatrix);
+    }
+
     public Integer getMatrixElement(int x, int y) {
 
         return gameMatrix[x][y];
