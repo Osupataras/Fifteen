@@ -17,6 +17,7 @@ public class FifteenEngine{
     private int startZeroX = GameDimensions.DISPLAY_X - 1; //Sarting position of zero button
     private int startZeroY = GameDimensions.DISPLAY_Y - 1;
     private int gameMatrix[][];
+    private boolean won = false;
 
 
     /**
@@ -123,13 +124,13 @@ public class FifteenEngine{
         gameMatrix[startZeroX][startZeroY] = gameMatrix[finalZeroX][finalZeroY];
         gameMatrix[finalZeroX][finalZeroY] = 0;
         iUserInterface.swapItems(startZeroX,startZeroY,finalZeroX,finalZeroY);
-        winConforming();
+
 
     }
 // method used to create new game (refill game matrix)
     public void newGame(){
 
-        createStartState(1000);
+        createStartState(1);
         iUserInterface.setNewGame(gameMatrix);
     }
 //getter of game matrix
@@ -138,7 +139,7 @@ public class FifteenEngine{
         return gameMatrix[x][y];
     }
 // method for checking winning state
-    public void winConforming(){
+    public boolean winConforming(){
         num = 1;
         for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
             for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
@@ -148,10 +149,9 @@ public class FifteenEngine{
             }
         }
         if(num==GameDimensions.DISPLAY_X*GameDimensions.DISPLAY_Y){
-            System.out.println(""+num);
-            JOptionPane.showMessageDialog(null,"Победа!");
-
+            won = true;
         }
+        return won;
 
     }
 

@@ -59,19 +59,9 @@ public class GameUi implements KeyListener, IUserInterface{
 
         for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
             for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
-
-//                Integer matrixElement = fifteenEngine.getMatrixElement(p, k);
-//                String matrixElementLabel = matrixElement.toString();
-//
                 buttons[k][p]=new JButton();
                 buttons[k][p].setBackground(Color.LIGHT_GRAY);
-//
-//                if (matrixElement==0){
-                    buttons[k][p].setBackground(Color.BLACK);
-//                    buttons[k][p].setText("");
-//                }
                 jPanel.add(buttons[k][p]);
-
             }
         }
 
@@ -127,6 +117,9 @@ public class GameUi implements KeyListener, IUserInterface{
         buttons[firstX][firstY].setBackground(Color.LIGHT_GRAY);
         buttons[secondX][secondY].setText("");
         buttons[secondX][secondY].setBackground(Color.BLACK);
+        if (gameEngine.winConforming()){
+            JOptionPane.showMessageDialog(null, "Won");
+        }
 
 
     }
