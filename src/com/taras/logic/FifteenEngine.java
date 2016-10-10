@@ -72,7 +72,7 @@ public class FifteenEngine{
         // create and fill the Array
         for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
             for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
-                gameMatrix[p][k] = num++;
+                gameMatrix[k][p] = num++;
             }
         }
         gameMatrix[startZeroX][startZeroY] = 0;
@@ -139,11 +139,11 @@ public class FifteenEngine{
         return gameMatrix[x][y];
     }
 // method for checking winning state
-    public boolean winConforming(){
+    public boolean winConfirming(){
         num = 1;
         for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
             for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
-                if (getMatrixElement(p,k) == num){
+                if (getMatrixElement(k,p) == num){
                     num++;
                 }
             }

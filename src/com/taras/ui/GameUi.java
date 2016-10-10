@@ -117,7 +117,7 @@ public class GameUi implements KeyListener, IUserInterface{
         buttons[firstX][firstY].setBackground(Color.LIGHT_GRAY);
         buttons[secondX][secondY].setText("");
         buttons[secondX][secondY].setBackground(Color.BLACK);
-        if (gameEngine.winConforming()){
+        if (gameEngine.winConfirming()){
             JOptionPane.showMessageDialog(null, "Won");
         }
 
