@@ -50,10 +50,6 @@ public class GameUi implements KeyListener, IUserInterface{
         gameEngine = new FifteenEngine(this);
         //Shuffle the deck by "count" moves
         setupUi(gameEngine);
-
-
-
-
     }
 
     private void setupUi(FifteenEngine fifteenEngine) {
@@ -64,16 +60,16 @@ public class GameUi implements KeyListener, IUserInterface{
         for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
             for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
 
-                Integer matrixElement = fifteenEngine.getMatrixElement(p, k);
-                String matrixElementLabel = matrixElement.toString();
-
-                buttons[k][p]=new JButton(matrixElementLabel);
+//                Integer matrixElement = fifteenEngine.getMatrixElement(p, k);
+//                String matrixElementLabel = matrixElement.toString();
+//
+                buttons[k][p]=new JButton();
                 buttons[k][p].setBackground(Color.LIGHT_GRAY);
-
-                if (matrixElement==0){
+//
+//                if (matrixElement==0){
                     buttons[k][p].setBackground(Color.BLACK);
-                    buttons[k][p].setText("");
-                }
+//                    buttons[k][p].setText("");
+//                }
                 jPanel.add(buttons[k][p]);
 
             }
@@ -141,12 +137,12 @@ public class GameUi implements KeyListener, IUserInterface{
             for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
                 Integer gameMatrixElement = gameMatrix[p][k];
                 String gameMatrixElementLabel = gameMatrixElement.toString();
-                buttons[k][p].setText(gameMatrixElementLabel);
-                buttons[k][p].setBackground(Color.LIGHT_GRAY);
+                buttons[p][k].setText(gameMatrixElementLabel);
+                buttons[p][k].setBackground(Color.LIGHT_GRAY);
 
-            if (gameMatrix[k][p]==0){
-                buttons[k][p].setBackground(Color.BLACK);
-                buttons[k][p].setText("");
+            if (gameMatrix[p][k]==0){
+                buttons[p][k].setBackground(Color.BLACK);
+                buttons[p][k].setText("");
             }
 
         }

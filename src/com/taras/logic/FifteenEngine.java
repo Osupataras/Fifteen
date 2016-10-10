@@ -13,13 +13,9 @@ import java.util.Random;
 public class FifteenEngine{
 
     private Random random = new Random();
-
+    private int num = 1; //Counter used to fiil the Array
     private int startZeroX = GameDimensions.DISPLAY_X - 1; //Sarting position of zero button
     private int startZeroY = GameDimensions.DISPLAY_Y - 1;
-    private int finalZeroX = 0; //Position of target button
-    private int finalZeroY = 0;
-    private int num = 1; //Counter used to fiil the Array
-    private int numberOfMoves = 0;
     private int gameMatrix[][];
 
 
@@ -28,10 +24,6 @@ public class FifteenEngine{
      * swap items inside the UI.
      */
     public IUserInterface iUserInterface;
-
-    public void registerSwapItems(IUserInterface iUserInterface){
-        this.iUserInterface = iUserInterface;
-    }
 
     public FifteenEngine(IUserInterface iUserInterface)  {
         this.iUserInterface = iUserInterface;
@@ -72,14 +64,17 @@ public class FifteenEngine{
     }
 
     public void createStartState(int maxMoveNumber) {
-
+        int num = 1; //Counter used to fiil the Array]
+        int numberOfMoves = 0;
+        startZeroX = GameDimensions.DISPLAY_X-1;
+        startZeroY = GameDimensions.DISPLAY_Y-1;
         // create and fill the Array
         for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
             for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
                 gameMatrix[p][k] = num++;
             }
         }
-        gameMatrix[startZeroY][startZeroX] = 0;
+        gameMatrix[startZeroX][startZeroY] = 0;
 
         // Random moves by swapping them (4 direction)
         do {
@@ -87,59 +82,38 @@ public class FifteenEngine{
             numberOfMoves++;
 
             switch (randomMoveDirection) {
-                case 0 :
-                    finalZeroY = startZeroY;
-                    finalZeroX = startZeroX;
-                    finalZeroY--;
-                    if (finalZeroY < 0) {
-                        continue;
+                case 0:
+                    if (startZeroX > 0) {
+                        gameMatrix[startZeroX][startZeroY] = gameMatrix[startZeroX - 1][startZeroY];
+                        gameMatrix[startZeroX-1][startZeroY] = 0;
+                        startZeroX--;
                     }
-                    gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
-                    gameMatrix[finalZeroY][finalZeroX] = 0;
-                    startZeroY = finalZeroY;
-                    startZeroX = finalZeroX;
                     break;
 
                 case 1:
-                    finalZeroY = startZeroY;
-                    finalZeroX = startZeroX;
-                    finalZeroX++;
-                    if (finalZeroX > GameDimensions.DISPLAY_X - 1) {
-                        continue;
+                    if (startZeroY > 0) {
+                        gameMatrix[startZeroX][startZeroY] = gameMatrix[startZeroX][startZeroY - 1];
+                        gameMatrix[startZeroX][startZeroY-1] = 0;
+                        startZeroY--;
                     }
-                    gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
-                    gameMatrix[finalZeroY][finalZeroX] = 0;
-                    startZeroY = finalZeroY;
-                    startZeroX = finalZeroX;
                     break;
 
                 case 2:
-                    finalZeroY = startZeroY;
-                    finalZeroX = startZeroX;
-                    finalZeroY++;
-                    if (finalZeroY > GameDimensions.DISPLAY_Y - 1) {
-                        continue;
+                    if (startZeroX < 3) {
+                        gameMatrix[startZeroX][startZeroY] = gameMatrix[startZeroX + 1][startZeroY];
+                        gameMatrix[startZeroX+1][startZeroY] = 0;
+                        startZeroX++;
                     }
-                    gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
-                    gameMatrix[finalZeroY][finalZeroX] = 0;
-                    startZeroY = finalZeroY;
-                    startZeroX = finalZeroX;
-
                     break;
 
                 case 3:
-                    finalZeroY = startZeroY;
-                    finalZeroX = startZeroX;
-                    finalZeroX--;
-                    if (finalZeroX < 0) {
-                        continue;
+                    if (startZeroY < 3) {
+                        gameMatrix[startZeroX][startZeroY] = gameMatrix[startZeroX][startZeroY+1];
+                        gameMatrix[startZeroX][startZeroY+1] = 0;
+                        startZeroY++;
                     }
-                    gameMatrix[startZeroY][startZeroX] = gameMatrix[finalZeroY][finalZeroX];
-                    gameMatrix[finalZeroY][finalZeroX] = 0;
-                    startZeroY = finalZeroY;
-                    startZeroX = finalZeroX;
                     break;
-                }
+            }
 
         } while (numberOfMoves < maxMoveNumber);
 
@@ -154,6 +128,7 @@ public class FifteenEngine{
     }
 // method used to create new game (refill game matrix)
     public void newGame(){
+
         createStartState(1000);
         iUserInterface.setNewGame(gameMatrix);
     }
