@@ -144,7 +144,7 @@ public class FifteenEngine{
         } while (numberOfMoves < maxMoveNumber);
 
     }
-
+// method used for swap elemetns in matrix and check for win state
     private void swapMatrixElements(int startZeroX, int startZeroY, int finalZeroX, int finalZeroY){
         gameMatrix[startZeroX][startZeroY] = gameMatrix[finalZeroX][finalZeroY];
         gameMatrix[finalZeroX][finalZeroY] = 0;
@@ -152,17 +152,17 @@ public class FifteenEngine{
         winConforming();
 
     }
-
+// method used to create new game (refill game matrix)
     public void newGame(){
         createStartState(1000);
         iUserInterface.setNewGame(gameMatrix);
     }
-
+//getter of game matrix
     public Integer getMatrixElement(int x, int y) {
 
         return gameMatrix[x][y];
     }
-
+// method for checking winning state
     public void winConforming(){
         num = 1;
         for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
