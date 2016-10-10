@@ -148,11 +148,7 @@ public class FifteenEngine{
                 }
             }
         }
-        if(num==GameDimensions.DISPLAY_X*GameDimensions.DISPLAY_Y){
-            won = true;
-        }
-        return won;
-
+        return num == GameDimensions.DISPLAY_X*GameDimensions.DISPLAY_Y;
     }
 
 }
