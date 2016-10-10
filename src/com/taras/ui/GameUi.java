@@ -27,8 +27,15 @@ public class GameUi implements KeyListener, IUserInterface{
     private BorderLayout borderLayout;
     private GridLayout gridLayout;
     private JPanel jPanel;
+    private JMenuBar menuBar;
+    private JMenu menu;
+    private JMenuItem menuNewGame, menuSaveGame, menuLoadGame, menuExit;
+
+
 
     public GameUi() {
+        menuBar = new JMenuBar();
+        menu = new JMenu("Game");
         buttons = new JButton[GameDimensions.DISPLAY_X ][GameDimensions.DISPLAY_Y];
         window = new JPanel();
         borderLayout = new BorderLayout();
@@ -50,6 +57,7 @@ public class GameUi implements KeyListener, IUserInterface{
     private void setupUi(FifteenEngine fifteenEngine) {
         window.setLayout(borderLayout);
         jPanel.setLayout(gridLayout);
+
 
         for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
             for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
@@ -75,9 +83,21 @@ public class GameUi implements KeyListener, IUserInterface{
             }
         }
 
+        menuNewGame = new JMenuItem("New game");
+        menuSaveGame = new JMenuItem("Save game");
+        menuLoadGame = new JMenuItem("Load game");
+        menuExit = new JMenuItem("Exit");
+
+        menu.add(menuNewGame);
+        menu.add(menuSaveGame);
+        menu.add(menuLoadGame);
+        menu.add(menuExit);
+        menuBar.add(menu);
+
         window.add("Center", jPanel);
         JFrame frame = new JFrame("FifteenGameCore");
         frame.setContentPane(window);
+        frame.setJMenuBar(menuBar);
         frame.pack();
         frame.setVisible(true);
 
