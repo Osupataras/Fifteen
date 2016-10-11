@@ -130,7 +130,7 @@ public class FifteenEngine{
 // method used to create new game (refill game matrix)
     public void newGame(){
 
-        createStartState(1);
+        createStartState(1000);
         iUserInterface.setNewGame(gameMatrix);
     }
 //getter of game matrix
