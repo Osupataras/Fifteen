@@ -6,6 +6,12 @@ import com.taras.ui.IUserInterface;
 
 import javax.swing.*;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 /**
@@ -20,6 +26,9 @@ public class FifteenEngine{
     private int gameMatrix[][];
     private boolean won = false;
     private File savedGame;
+    private String savedGamePath;
+    private Date time = new Date();
+    private DateFormat dateFormat = new SimpleDateFormat(" dd MM (HH mm ss)");
 
 
     /**
@@ -129,16 +138,7 @@ public class FifteenEngine{
 
 
     }
-// method used to create new game (refill game matrix)
-    public void newGame(){
 
-        createStartState(1000);
-        iUserInterface.setNewGame(gameMatrix);
-    }
-
-    public void saveGame(){
-        iUserInterface.setSaveGame(gameMatrix);
-    }
 //getter of game matrix
     public Integer getMatrixElement(int x, int y) {
 
@@ -156,6 +156,54 @@ public class FifteenEngine{
         }
         return num == GameDimensions.DISPLAY_X*GameDimensions.DISPLAY_Y;
     }
+
+
+
+    // method used to create new game (refill game matrix)
+    public void newGame(){
+
+        createStartState(1000);
+        iUserInterface.setNewGame(gameMatrix);
+    }
+
+    //method for write game progress into the file
+    public void fileWriter(int gameMatrix[][],File file){
+        try {
+            PrintWriter printWriter = new PrintWriter(file.getAbsoluteFile());
+            try{
+                for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
+                    for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
+                        printWriter.write(""+gameMatrix[p][k]+" ");
+                }
+            }
+        }finally {
+                printWriter.close();
+            }
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }finally {
+
+        }
+
+    }
+
+    //(remember to rewrite the catch block using ask form to create the path) fix it until 2017 :)
+    public void saveGame(){
+        savedGame = new File("D://Fifteen/saved games",""+iUserInterface.setSaveGame()+dateFormat.format(time)+".txt");
+        try {
+            boolean created = savedGame.createNewFile();
+            if(created){
+                fileWriter(gameMatrix,savedGame);
+                System.out.println("Game saved");
+                iUserInterface.savedGameMassage();
+            }
+
+        } catch (IOException e) {
+            System.out.println("Game doesn't saved. Please try again");
+        }
+    }
+
 
 }
 

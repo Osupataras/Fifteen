@@ -19,10 +19,6 @@ public class GameUi implements KeyListener, IUserInterface{
 
     private FifteenEngine gameEngine;
 
-    private GameUi gameUi;
-
-
-
     // UI components
     public JButton[][] buttons;
     private JPanel window;
@@ -33,8 +29,6 @@ public class GameUi implements KeyListener, IUserInterface{
     private JMenu menu;
     private JMenuItem menuNewGame, menuSaveGame, menuLoadGame, menuExit;
     JFrame frame = new JFrame("FifteenGameCore");
-
-
 
     public GameUi() {
         menuBar = new JMenuBar();
@@ -48,7 +42,6 @@ public class GameUi implements KeyListener, IUserInterface{
 
     public void start() {
         gameEngine = new FifteenEngine(this);
-        //Shuffle the deck by "count" moves
         setupUi(gameEngine);
     }
 
@@ -151,8 +144,17 @@ public class GameUi implements KeyListener, IUserInterface{
 
     @Override
     public String setSaveGame() {
-        String user = JOptionPane.showInputDialog(null,"Enter your name","Save game",3);
+        String user = "";
+        while (user.equals("")) {
+            user = JOptionPane.showInputDialog(null, "Enter your name", "Save game", 3);
+        }
         return user;
+
+    }
+
+    @Override
+    public void savedGameMassage() {
+        JOptionPane.showMessageDialog(null,"Game successfully saved. Continue?","Save game",1);
     }
 
 
