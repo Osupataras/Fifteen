@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.File;
 
 /**
  * Class created by Andrey on 9/22/16.
@@ -163,21 +164,21 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
         }
 
         @Override
-        public String getSavedGame() {
+        public File getSavedGame() {
             Component component = new Component() {
                 @Override
                 public String getName() {
                     return super.getName();
                 }
             };
-            String gameName = "";
+            File gameName = new File(""); ;
             JFileChooser fileChooser = new JFileChooser(gameEngine.getSavedGamePath());
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Fifteen files", "fft");
             fileChooser.setFileFilter(filter);
             int returnVal = fileChooser.showDialog(component,"Load game");
             if(returnVal == JFileChooser.APPROVE_OPTION) {
-                gameName = fileChooser.getSelectedFile().getName();
-                System.out.println(gameName);
+                gameName = fileChooser.getSelectedFile();
+                System.out.println(fileChooser.getSelectedFile().getName());
             }
             return gameName;
         }
@@ -189,7 +190,7 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
 
     @Override
     public String setSavedGamePath() {
-        JOptionPane.showMessageDialog(null,"Please choose the folder for save games");
+        JOptionPane.showMessageDialog(null,"Please choose the folder for save games","Welcome!!!",1);
         String savedGamePath = "";
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));

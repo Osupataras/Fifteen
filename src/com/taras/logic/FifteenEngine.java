@@ -192,11 +192,15 @@ public class FifteenEngine{
         }
     }
 
-    public void fileReader (File file){
+    public void loadGame(){
+        savedGame = iGameMenu.getSavedGame();
         StringBuilder stringBuilder = new StringBuilder();
-        num=0;
+        int count;
+        int count1 = 0;
+        char c;
+        String matrixElement = "";
         try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(savedGame.getAbsoluteFile()));
             try{
                 String string;
                 if((string = bufferedReader.readLine()) != null){
@@ -204,7 +208,19 @@ public class FifteenEngine{
                 }
                 for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
                     for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
-                        System.out.println(string);
+                        for (count=count1;count<string.length();count++){
+                            char stringElement = string.charAt(count);
+                            if(stringElement != ' '){
+                                matrixElement+=stringElement;
+                            }
+                            else{
+                                gameMatrix[p][k] = Integer.parseInt(matrixElement);
+                                matrixElement = "";
+                                count1=count+1;
+                                break;
+
+                            }
+                        }
 
                     }
                 }
@@ -212,12 +228,14 @@ public class FifteenEngine{
                 bufferedReader.close();
             }
         }
+
         catch (IOException e) {
             e.printStackTrace();
         }
+        iGameMenu.setNewGame(gameMatrix);
     }
 
-    //FIXME:(remember to rewrite the catch block using ask form to create the path) fix it until 2017 :)
+
     public void saveGame(){
         savedGame = new File(savedGamePath,""+iGameMenu.setSaveGame()+dateFormat.format(time)+".fft");
         try {
@@ -232,13 +250,7 @@ public class FifteenEngine{
             System.out.println("Game doesn't saved. Please try again");
         }
     }
-    public void loadGame(){
-        setConfigFile ();
-        savedGame = new File(savedGamePath+"/"+iGameMenu.getSavedGame());
-        if(savedGame.exists()){
-        }
 
-    }
 
     public void getConfigFile(){
 
@@ -253,7 +265,7 @@ public class FifteenEngine{
                     savedGamePath = bufferedReader.readLine();
                     if(savedGamePath == null){
                         try{
-                            savedGamePath = iUserInterface.setSavedGamePath();
+                            savedGamePath = iGameMenu.setSavedGamePath();
                             PrintWriter printWriter = new PrintWriter(configFile.getAbsoluteFile());
                             printWriter.write(savedGamePath);
                             printWriter.close();
@@ -267,7 +279,7 @@ public class FifteenEngine{
                     PrintWriter printWriter = new PrintWriter(configFile.getAbsoluteFile());
                     if(created){
                         try{
-                        savedGamePath = iUserInterface.setSavedGamePath();
+                        savedGamePath = iGameMenu.setSavedGamePath();
                         printWriter.write(savedGamePath);
                         }
                         finally {

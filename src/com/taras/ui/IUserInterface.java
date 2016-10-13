@@ -18,5 +18,5 @@ public interface IUserInterface {
      */
     void swapItems(int firstX, int firstY, int secondX, int secondY);
     void savedGameMassage();
-    String setSavedGamePath();
+
 }
