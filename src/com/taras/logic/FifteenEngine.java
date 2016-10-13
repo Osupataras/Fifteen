@@ -37,7 +37,7 @@ public class FifteenEngine{
     public IUserInterface iUserInterface;
     public IGameMenu iGameMenu;
 
-    public FifteenEngine(IUserInterface iUserInterface, IGameMenu iGameMenu)  {
+    public FifteenEngine(IUserInterface iUserInterface,IGameMenu iGameMenu)  {
         this.iGameMenu = iGameMenu;
         this.iUserInterface = iUserInterface;
         gameMatrix = new int[GameDimensions.DISPLAY_X][GameDimensions.DISPLAY_Y];
@@ -219,6 +219,7 @@ public class FifteenEngine{
 
     //FIXME:(remember to rewrite the catch block using ask form to create the path) fix it until 2017 :)
     public void saveGame(){
+        setConfigFile ();
         savedGame = new File(savedGamePath,""+iGameMenu.setSaveGame()+dateFormat.format(time)+".fft");
         try {
             boolean created = savedGame.createNewFile();
@@ -233,12 +234,52 @@ public class FifteenEngine{
         }
     }
     public void loadGame(){
+        setConfigFile ();
         savedGame = new File(savedGamePath+"/"+iGameMenu.getSavedGame());
         if(savedGame.exists()){
         }
 
     }
 
+    public void getConfigFile(){
+
+    }
+
+    public void setConfigFile (){
+        File configFile = new File("config.txt");
+        try {
+                if(configFile.exists()){
+                    PrintWriter printWriter = new PrintWriter(configFile.getAbsoluteFile());
+                    BufferedReader bufferedReader = new BufferedReader(new FileReader(configFile.getAbsoluteFile()));
+                    savedGamePath = bufferedReader.readLine();
+                    if(savedGamePath.equals(null)){
+                        try{
+                            savedGamePath = iUserInterface.setSavedGamePath();
+                            printWriter = new PrintWriter(configFile.getAbsoluteFile());
+                            printWriter.write(savedGamePath);
+                        }finally {
+                            printWriter.close();
+                        }
+                    }
+                }
+                else{
+                    Boolean created = configFile.createNewFile();
+                    PrintWriter printWriter = new PrintWriter(configFile.getAbsoluteFile());
+                    if(created){
+                        try{
+                        savedGamePath = iUserInterface.setSavedGamePath();
+                        printWriter.write(savedGamePath);
+                        }
+                        finally {
+                            printWriter.close();
+                        }
+                    }
+                }
+
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+    }
 
 }
 

@@ -18,7 +18,7 @@ import java.awt.event.KeyListener;
  * This class is implementation of the {@link IUserInterface}.
  * This implementation is using Java AWT to create the matrix of JButtons.
  */
-public class GameUi implements KeyListener, IUserInterface, IGameMenu{
+public class GameUi implements KeyListener, IUserInterface,IGameMenu {
 
     private FifteenEngine gameEngine;
 
@@ -44,7 +44,7 @@ public class GameUi implements KeyListener, IUserInterface, IGameMenu{
     }
 
     public void start() {
-        gameEngine = new FifteenEngine(this);
+        gameEngine = new FifteenEngine(this,this);
         setupUi(gameEngine);
     }
 
@@ -127,80 +127,97 @@ public class GameUi implements KeyListener, IUserInterface, IGameMenu{
         buttons[firstX][firstY].setBackground(Color.LIGHT_GRAY);
         buttons[secondX][secondY].setText("");
         buttons[secondX][secondY].setBackground(Color.BLACK);
-        if (gameEngine.winConfirming()){
+        if (gameEngine.winConfirming()) {
             JOptionPane.showMessageDialog(null, "Won");
         }
-
-
     }
 
-    @Override
-    public void setNewGame(int gameMatrix[][]) {
-        for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
-            for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
-                Integer gameMatrixElement = gameMatrix[p][k];
-                String gameMatrixElementLabel = gameMatrixElement.toString();
-                buttons[p][k].setText(gameMatrixElementLabel);
-                buttons[p][k].setBackground(Color.LIGHT_GRAY);
 
-            if (gameMatrix[p][k]==0){
-                buttons[p][k].setBackground(Color.BLACK);
-                buttons[p][k].setText("");
+        @Override
+        public void setNewGame(int gameMatrix[][]) {
+            for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
+                for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
+                    Integer gameMatrixElement = gameMatrix[p][k];
+                    String gameMatrixElementLabel = gameMatrixElement.toString();
+                    buttons[p][k].setText(gameMatrixElementLabel);
+                    buttons[p][k].setBackground(Color.LIGHT_GRAY);
+
+                    if (gameMatrix[p][k]==0){
+                        buttons[p][k].setBackground(Color.BLACK);
+                        buttons[p][k].setText("");
+                    }
+
+                }
             }
-
         }
-    }
-    }
 
-    @Override
-    public String setSaveGame() {
-        String user = "";
-        while (user.equals("")) {
-            user = JOptionPane.showInputDialog(null, "Enter your name", "Save game", 3);
-        }
-        return user;
-
-    }
-
-    @Override
-    public String getSavedGame() {
-        Component component = new Component() {
-            @Override
-            public String getName() {
-                return super.getName();
+        @Override
+        public String setSaveGame() {
+            String user = "";
+            while (user.equals("")) {
+                user = JOptionPane.showInputDialog(null, "Enter your name", "Save game", 3);
             }
-        };
-        String gameName = "";
-        JFileChooser fileChooser = new JFileChooser(gameEngine.getSavedGamePath());
-        FileNameExtensionFilter filter = new FileNameExtensionFilter("Fifteen files", "fft");
-        fileChooser.setFileFilter(filter);
-        int returnVal = fileChooser.showDialog(component,"Load game");
-        if(returnVal == JFileChooser.APPROVE_OPTION) {
-            gameName = fileChooser.getSelectedFile().getName();
-            System.out.println(gameName);
+            return user;
+
         }
-        return gameName;
-    }
+
+        @Override
+        public String getSavedGame() {
+            Component component = new Component() {
+                @Override
+                public String getName() {
+                    return super.getName();
+                }
+            };
+            String gameName = "";
+            JFileChooser fileChooser = new JFileChooser(gameEngine.getSavedGamePath());
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("Fifteen files", "fft");
+            fileChooser.setFileFilter(filter);
+            int returnVal = fileChooser.showDialog(component,"Load game");
+            if(returnVal == JFileChooser.APPROVE_OPTION) {
+                gameName = fileChooser.getSelectedFile().getName();
+                System.out.println(gameName);
+            }
+            return gameName;
+        }
+
+        @Override
+        public void savedGameMassage() {
+            JOptionPane.showMessageDialog(null,"Game successfully saved. Continue?","Save game",1);
+        }
 
     @Override
-    public void savedGameMassage() {
-        JOptionPane.showMessageDialog(null,"Game successfully saved. Continue?","Save game",1);
+    public String setSavedGamePath() {
+        String savedGamePath = "";
+        JFileChooser chooser = new JFileChooser();
+        chooser.setCurrentDirectory(new java.io.File("."));
+        chooser.setDialogTitle("choosertitle");
+        chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        chooser.setAcceptAllFileFilterUsed(false);
+
+        if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            savedGamePath = chooser.getCurrentDirectory().getPath();
+
+        } else {
+            System.out.println("No Selection ");
+        }
+        return savedGamePath;
     }
 
 
     @Override
-    public void keyTyped(KeyEvent e) {
+        public void keyTyped(KeyEvent e) {
 
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            gameEngine.processPressedKey(e.getKeyChar());
+
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+
+        }
     }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        gameEngine.processPressedKey(e.getKeyChar());
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
-}
