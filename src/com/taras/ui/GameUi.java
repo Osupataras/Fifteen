@@ -97,6 +97,13 @@ public class GameUi implements KeyListener, IUserInterface{
             }
         });
 
+        menuSaveGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameEngine.saveGame();
+            }
+        });
+
 
         window.add("Center", jPanel);
 
@@ -142,6 +149,11 @@ public class GameUi implements KeyListener, IUserInterface{
     }
     }
 
+    @Override
+    public String setSaveGame() {
+        String user = JOptionPane.showInputDialog(null,"Enter your name","Save game",3);
+        return user;
+    }
 
 
     @Override

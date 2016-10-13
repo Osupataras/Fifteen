@@ -5,6 +5,7 @@ import com.taras.ui.GameUi;
 import com.taras.ui.IUserInterface;
 
 import javax.swing.*;
+import java.io.File;
 import java.util.Random;
 
 /**
@@ -18,6 +19,7 @@ public class FifteenEngine{
     private int startZeroY = GameDimensions.DISPLAY_Y - 1;
     private int gameMatrix[][];
     private boolean won = false;
+    private File savedGame;
 
 
     /**
@@ -132,6 +134,10 @@ public class FifteenEngine{
 
         createStartState(1000);
         iUserInterface.setNewGame(gameMatrix);
+    }
+
+    public void saveGame(){
+        iUserInterface.setSaveGame(gameMatrix);
     }
 //getter of game matrix
     public Integer getMatrixElement(int x, int y) {
