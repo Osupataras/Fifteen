@@ -83,6 +83,7 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
         menuExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                gameEngine.saveGame(2);
                 System.exit(0);
             }
         } );
@@ -98,7 +99,7 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
         menuSaveGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameEngine.saveGame();
+                gameEngine.saveGame(1);
             }
         });
 
@@ -193,13 +194,13 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
         JOptionPane.showMessageDialog(null,"Please choose the folder for save games","Welcome!!!",1);
         String savedGamePath = "";
         JFileChooser chooser = new JFileChooser();
-        chooser.setCurrentDirectory(new java.io.File("."));
+//        chooser.setCurrentDirectory(new java.io.File("."));
         chooser.setDialogTitle("Choose directory for saving your games");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
 
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            savedGamePath = chooser.getCurrentDirectory().getAbsolutePath();
+            savedGamePath = chooser.getSelectedFile().getAbsolutePath();
 
         } else {
             System.out.println("No Selection ");

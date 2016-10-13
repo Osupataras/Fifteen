@@ -191,7 +191,7 @@ public class FifteenEngine{
             e.printStackTrace();
         }
     }
-
+// Method for load from file game state
     public void loadGame(){
         savedGame = iGameMenu.getSavedGame();
         StringBuilder stringBuilder = new StringBuilder();
@@ -235,15 +235,24 @@ public class FifteenEngine{
         iGameMenu.setNewGame(gameMatrix);
     }
 
-
-    public void saveGame(){
-        savedGame = new File(savedGamePath,""+iGameMenu.setSaveGame()+dateFormat.format(time)+".fft");
+//method used for save game state into the file
+    public void saveGame(int type){
+        // Classic save
+        if (type == 1) {
+            savedGame = new File(savedGamePath, "" + iGameMenu.setSaveGame() + dateFormat.format(time) + ".fft");
+        }
+        // Save using close button
+        if (type == 2){
+            savedGame = new File(savedGamePath, "autosave"  + dateFormat.format(time) + ".fft");
+        }
         try {
             boolean created = savedGame.createNewFile();
             if(created){
                 fileWriter(gameMatrix,savedGame);
                 System.out.println("Game saved");
-                iUserInterface.savedGameMassage();
+                if (type == 1){
+                    iUserInterface.savedGameMassage();
+                }
             }
 
         } catch (IOException e) {
@@ -255,7 +264,7 @@ public class FifteenEngine{
     public void getConfigFile(){
 
     }
-
+// Method used for create or fill (if it allready created) config file;
     public void setConfigFile (){
         File configFile = new File("config.txt");
         try {
