@@ -2,6 +2,7 @@ package com.taras.ui;
 
 import com.taras.EntryPoint;
 import com.taras.config.GameDimensions;
+import com.taras.config.IGameMenu;
 import com.taras.logic.FifteenEngine;
 
 import javax.swing.*;
@@ -17,7 +18,7 @@ import java.awt.event.KeyListener;
  * This class is implementation of the {@link IUserInterface}.
  * This implementation is using Java AWT to create the matrix of JButtons.
  */
-public class GameUi implements KeyListener, IUserInterface{
+public class GameUi implements KeyListener, IUserInterface, IGameMenu{
 
     private FifteenEngine gameEngine;
 

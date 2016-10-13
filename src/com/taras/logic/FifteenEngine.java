@@ -1,6 +1,7 @@
 package com.taras.logic;
 
 import com.taras.config.GameDimensions;
+import com.taras.config.IGameMenu;
 import com.taras.ui.GameUi;
 import com.taras.ui.IUserInterface;
 
@@ -24,7 +25,7 @@ public class FifteenEngine{
     private int gameMatrix[][];
     private boolean won = false;
     private File savedGame;
-    private String savedGamePath = "D://Fifteen/saved games";
+    private String savedGamePath;
     private Date time = new Date();
     private DateFormat dateFormat = new SimpleDateFormat(" dd MM (HH mm ss)");
 
@@ -34,8 +35,10 @@ public class FifteenEngine{
      * swap items inside the UI.
      */
     public IUserInterface iUserInterface;
+    public IGameMenu iGameMenu;
 
-    public FifteenEngine(IUserInterface iUserInterface)  {
+    public FifteenEngine(IUserInterface iUserInterface, IGameMenu iGameMenu)  {
+        this.iGameMenu = iGameMenu;
         this.iUserInterface = iUserInterface;
         gameMatrix = new int[GameDimensions.DISPLAY_X][GameDimensions.DISPLAY_Y];
     }
@@ -167,7 +170,7 @@ public class FifteenEngine{
     public void newGame(){
 
         createStartState(1000);
-        iUserInterface.setNewGame(gameMatrix);
+        iGameMenu.setNewGame(gameMatrix);
     }
 
     //method for write game progress into the file
@@ -214,9 +217,9 @@ public class FifteenEngine{
         }
     }
 
-    //(remember to rewrite the catch block using ask form to create the path) fix it until 2017 :)
+    //FIXME:(remember to rewrite the catch block using ask form to create the path) fix it until 2017 :)
     public void saveGame(){
-        savedGame = new File(savedGamePath,""+iUserInterface.setSaveGame()+dateFormat.format(time)+".fft");
+        savedGame = new File(savedGamePath,""+iGameMenu.setSaveGame()+dateFormat.format(time)+".fft");
         try {
             boolean created = savedGame.createNewFile();
             if(created){
@@ -230,10 +233,8 @@ public class FifteenEngine{
         }
     }
     public void loadGame(){
-        savedGame = new File(savedGamePath+"/"+iUserInterface.getSavedGame());
+        savedGame = new File(savedGamePath+"/"+iGameMenu.getSavedGame());
         if(savedGame.exists()){
-
-
         }
 
     }
