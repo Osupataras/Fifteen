@@ -230,8 +230,9 @@ public class FifteenEngine{
         }
     }
     public void loadGame(){
-        savedGame = new File(savedGamePath+iUserInterface.getSavedGame());
+        savedGame = new File(savedGamePath+"/"+iUserInterface.getSavedGame());
         if(savedGame.exists()){
+
 
         }
 
