@@ -19,5 +19,6 @@ public interface IUserInterface {
     void swapItems(int firstX, int firstY, int secondX, int secondY);
     void setNewGame(int gameMatrix[][]);
     String setSaveGame();
+    String getSavedGame();
     void savedGameMassage();
 }

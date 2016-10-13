@@ -1,9 +1,11 @@
 package com.taras.ui;
 
+import com.taras.EntryPoint;
 import com.taras.config.GameDimensions;
 import com.taras.logic.FifteenEngine;
 
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -97,6 +99,13 @@ public class GameUi implements KeyListener, IUserInterface{
             }
         });
 
+        menuLoadGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                gameEngine.loadGame();
+            }
+        });
+
 
         window.add("Center", jPanel);
 
@@ -150,6 +159,26 @@ public class GameUi implements KeyListener, IUserInterface{
         }
         return user;
 
+    }
+
+    @Override
+    public String getSavedGame() {
+        Component component = new Component() {
+            @Override
+            public String getName() {
+                return super.getName();
+            }
+        };
+        String gameName = "";
+        JFileChooser fileChooser = new JFileChooser(gameEngine.getSavedGamePath());
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Fifteen files", "fft");
+        fileChooser.setFileFilter(filter);
+        int returnVal = fileChooser.showDialog(component,"Load game");
+        if(returnVal == JFileChooser.APPROVE_OPTION) {
+            gameName = fileChooser.getSelectedFile().getName();
+            System.out.println(gameName);
+        }
+        return gameName;
     }
 
     @Override

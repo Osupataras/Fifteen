@@ -5,10 +5,7 @@ import com.taras.ui.GameUi;
 import com.taras.ui.IUserInterface;
 
 import javax.swing.*;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,6 +16,7 @@ import java.util.Random;
  */
 public class FifteenEngine{
 
+
     private Random random = new Random();
     private int num = 1; //Counter used to fiil the Array
     private int startZeroX = GameDimensions.DISPLAY_X - 1; //Sarting position of zero button
@@ -26,7 +24,7 @@ public class FifteenEngine{
     private int gameMatrix[][];
     private boolean won = false;
     private File savedGame;
-    private String savedGamePath;
+    private String savedGamePath = "D://Fifteen/saved games";
     private Date time = new Date();
     private DateFormat dateFormat = new SimpleDateFormat(" dd MM (HH mm ss)");
 
@@ -144,6 +142,12 @@ public class FifteenEngine{
 
         return gameMatrix[x][y];
     }
+    public String getSavedGamePath() {
+
+        return savedGamePath;
+    }
+
+
 // method for checking winning state
     public boolean winConfirming(){
         num = 1;
@@ -182,15 +186,37 @@ public class FifteenEngine{
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
-        }finally {
-
         }
+    }
 
+    public void fileReader (File file){
+        StringBuilder stringBuilder = new StringBuilder();
+        num=0;
+        try {
+            BufferedReader bufferedReader = new BufferedReader(new FileReader(file.getAbsoluteFile()));
+            try{
+                String string;
+                if((string = bufferedReader.readLine()) != null){
+                    stringBuilder.append(string);
+                }
+                for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
+                    for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
+                        System.out.println(string);
+
+                    }
+                }
+            }finally {
+                bufferedReader.close();
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     //(remember to rewrite the catch block using ask form to create the path) fix it until 2017 :)
     public void saveGame(){
-        savedGame = new File("D://Fifteen/saved games",""+iUserInterface.setSaveGame()+dateFormat.format(time)+".txt");
+        savedGame = new File(savedGamePath,""+iUserInterface.setSaveGame()+dateFormat.format(time)+".fft");
         try {
             boolean created = savedGame.createNewFile();
             if(created){
@@ -202,6 +228,13 @@ public class FifteenEngine{
         } catch (IOException e) {
             System.out.println("Game doesn't saved. Please try again");
         }
+    }
+    public void loadGame(){
+        savedGame = new File(savedGamePath+iUserInterface.getSavedGame());
+        if(savedGame.exists()){
+
+        }
+
     }
 
 
