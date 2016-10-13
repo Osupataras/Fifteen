@@ -45,6 +45,7 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
 
     public void start() {
         gameEngine = new FifteenEngine(this,this);
+        gameEngine.setConfigFile();
         setupUi(gameEngine);
     }
 
@@ -188,15 +189,16 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
 
     @Override
     public String setSavedGamePath() {
+        JOptionPane.showMessageDialog(null,"Please choose the folder for save games");
         String savedGamePath = "";
         JFileChooser chooser = new JFileChooser();
         chooser.setCurrentDirectory(new java.io.File("."));
-        chooser.setDialogTitle("choosertitle");
+        chooser.setDialogTitle("Choose directory for saving your games");
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         chooser.setAcceptAllFileFilterUsed(false);
 
         if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-            savedGamePath = chooser.getCurrentDirectory().getPath();
+            savedGamePath = chooser.getCurrentDirectory().getAbsolutePath();
 
         } else {
             System.out.println("No Selection ");

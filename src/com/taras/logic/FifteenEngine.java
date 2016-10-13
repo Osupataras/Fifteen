@@ -219,7 +219,6 @@ public class FifteenEngine{
 
     //FIXME:(remember to rewrite the catch block using ask form to create the path) fix it until 2017 :)
     public void saveGame(){
-        setConfigFile ();
         savedGame = new File(savedGamePath,""+iGameMenu.setSaveGame()+dateFormat.format(time)+".fft");
         try {
             boolean created = savedGame.createNewFile();
@@ -249,20 +248,21 @@ public class FifteenEngine{
         File configFile = new File("config.txt");
         try {
                 if(configFile.exists()){
-                    PrintWriter printWriter = new PrintWriter(configFile.getAbsoluteFile());
-                    BufferedReader bufferedReader = new BufferedReader(new FileReader(configFile.getAbsoluteFile()));
+                    FileReader fileReader = new FileReader(configFile);
+                    BufferedReader bufferedReader = new BufferedReader(fileReader);
                     savedGamePath = bufferedReader.readLine();
-                    if(savedGamePath.equals(null)){
+                    if(savedGamePath == null){
                         try{
                             savedGamePath = iUserInterface.setSavedGamePath();
-                            printWriter = new PrintWriter(configFile.getAbsoluteFile());
+                            PrintWriter printWriter = new PrintWriter(configFile.getAbsoluteFile());
                             printWriter.write(savedGamePath);
-                        }finally {
                             printWriter.close();
+                        }finally {
+                            bufferedReader.close();
                         }
                     }
-                }
-                else{
+                }                else{
+
                     Boolean created = configFile.createNewFile();
                     PrintWriter printWriter = new PrintWriter(configFile.getAbsoluteFile());
                     if(created){
@@ -272,6 +272,7 @@ public class FifteenEngine{
                         }
                         finally {
                             printWriter.close();
+
                         }
                     }
                 }
@@ -279,6 +280,7 @@ public class FifteenEngine{
             }catch (IOException e) {
                 e.printStackTrace();
             }
+            configFile.setReadOnly();
     }
 
 }
