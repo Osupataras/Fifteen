@@ -238,8 +238,9 @@ public class FifteenEngine{
                 bufferedReader.close();
             }
         }
-
+//FIXME: NEED TO CHANGE INTO FILENOTFOUNDEXEPTION. THEN START NEW GAME!!!!!!!
         catch (IOException e) {
+            System.out.println(e.toString());
             newGame();
             }
 
