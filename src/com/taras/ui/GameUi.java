@@ -28,7 +28,7 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
     private JPanel window;
     private BorderLayout borderLayout;
     private GridLayout gridLayout;
-    private JPanel jPanel;
+    private JPanel jPanel,jTimer;
     private JMenuBar menuBar;
     private JMenu menu;
     private JMenuItem menuNewGame, menuSaveGame, menuLoadGame, menuExit;
@@ -42,6 +42,7 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
         borderLayout = new BorderLayout();
         gridLayout = new GridLayout(GameDimensions.DISPLAY_X, GameDimensions.DISPLAY_Y);
         jPanel = new JPanel();
+        jTimer = new JPanel();
     }
 
     public void start() {
@@ -53,6 +54,7 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
     private void setupUi(FifteenEngine fifteenEngine) {
         window.setLayout(borderLayout);
         jPanel.setLayout(gridLayout);
+
 
 
         for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
@@ -112,6 +114,7 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
 
 
         window.add("Center", jPanel);
+        window.add("South",jTimer);
 
         frame.setContentPane(window);
         frame.setJMenuBar(menuBar);

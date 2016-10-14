@@ -48,26 +48,26 @@ public class FifteenEngine{
         // Some moves by WSAD
         switch (keyPressedLabel) {
 
-            case 'w':
+            case 's':
 
                 if (startZeroX>0){
                     swapMatrixElements(startZeroX,startZeroY,startZeroX-1,startZeroY);
                     startZeroX--;
                 }
                 break;
-            case 'd':
+            case 'a':
                 if (startZeroY<3) {
                     swapMatrixElements(startZeroX,startZeroY,startZeroX,startZeroY+1);
                     startZeroY++;
                 }
                 break;
-            case 's':
+            case 'w':
                 if (startZeroX<3){
                     swapMatrixElements(startZeroX,startZeroY,startZeroX+1,startZeroY);
                     startZeroX++;
                }
                 break;
-            case 'a':
+            case 'd':
                 if (startZeroY>0){
                     swapMatrixElements(startZeroX,startZeroY,startZeroX,startZeroY-1);
                     startZeroY--;
@@ -215,6 +215,10 @@ public class FifteenEngine{
                             }
                             else{
                                 gameMatrix[p][k] = Integer.parseInt(matrixElement);
+                                if (gameMatrix[p][k] == 0){
+                                    startZeroX = p;
+                                    startZeroY = k;
+                                }
                                 matrixElement = "";
                                 count1=count+1;
                                 break;
