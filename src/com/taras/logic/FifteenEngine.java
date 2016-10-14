@@ -192,8 +192,13 @@ public class FifteenEngine{
         }
     }
 // Method for load from file game state
-    public void loadGame(){
-        savedGame = iGameMenu.getSavedGame();
+    public void loadGame(int type){
+        if (type == 1){
+            savedGame = iGameMenu.getSavedGame();
+        }
+        if (type == 2){
+            savedGame = (Write here sth);
+        }
         StringBuilder stringBuilder = new StringBuilder();
         int count;
         int count1 = 0;
@@ -247,7 +252,7 @@ public class FifteenEngine{
         }
         // Save using close button
         if (type == 2){
-            savedGame = new File(savedGamePath, "autosave"  + dateFormat.format(time) + ".fft");
+            savedGame = new File(savedGamePath, "autosave.fft");
         }
         try {
             boolean created = savedGame.createNewFile();
