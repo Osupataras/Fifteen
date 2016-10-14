@@ -197,7 +197,7 @@ public class FifteenEngine{
             savedGame = iGameMenu.getSavedGame();
         }
         if (type == 2){
-            savedGame = (Write here sth);
+            savedGame = new File(savedGamePath, "/autosave.fft");
         }
         StringBuilder stringBuilder = new StringBuilder();
         int count;
@@ -233,14 +233,16 @@ public class FifteenEngine{
 
                     }
                 }
+
             }finally {
                 bufferedReader.close();
             }
         }
 
         catch (IOException e) {
-            e.printStackTrace();
-        }
+            newGame();
+            }
+
         iGameMenu.setNewGame(gameMatrix);
     }
 
@@ -252,7 +254,15 @@ public class FifteenEngine{
         }
         // Save using close button
         if (type == 2){
-            savedGame = new File(savedGamePath, "autosave.fft");
+//            try{
+            savedGame = new File(savedGamePath, "/autosave.fft");
+//            }
+//            catch (FileNotFoundException e){
+//                System.out.println("rrr ");
+//            }
+            if (savedGame.exists()){
+                savedGame.delete();
+            }
         }
         try {
             boolean created = savedGame.createNewFile();
@@ -263,17 +273,11 @@ public class FifteenEngine{
                     iUserInterface.savedGameMassage();
                 }
             }
-
         } catch (IOException e) {
             System.out.println("Game doesn't saved. Please try again");
         }
     }
-
-
-    public void getConfigFile(){
-
-    }
-// Method used for create or fill (if it allready created) config file;
+    // Method used for create or fill (if it allready created) config file;
     public void setConfigFile (){
         File configFile = new File("config.txt");
         try {

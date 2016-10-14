@@ -48,8 +48,9 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
     public void start() {
         gameEngine = new FifteenEngine(this,this);
         gameEngine.setConfigFile();
-        gameEngine.loadGame(2);
         setupUi(gameEngine);
+        gameEngine.loadGame(2);
+
     }
 
     private void setupUi(FifteenEngine fifteenEngine) {
