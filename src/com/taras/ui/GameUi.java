@@ -4,6 +4,7 @@ import com.taras.EntryPoint;
 import com.taras.config.GameDimensions;
 import com.taras.config.IGameMenu;
 import com.taras.logic.FifteenEngine;
+import com.taras.logic.FileManager;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -22,6 +23,7 @@ import java.io.File;
 public class GameUi implements KeyListener, IUserInterface,IGameMenu {
 
     private FifteenEngine gameEngine;
+    private FileManager fileManager;
 
     // UI components
     public JButton[][] buttons;
@@ -47,13 +49,14 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
 
     public void start() {
         gameEngine = new FifteenEngine(this,this);
-        gameEngine.setConfigFile();
-        setupUi(gameEngine);
-        gameEngine.loadGame(2);
+        fileManager = new FileManager(this,this,gameEngine);
+        fileManager.setConfigFile();
+        setupUi(gameEngine,fileManager);
+        fileManager.loadGame(2);
 
     }
 
-    private void setupUi(FifteenEngine fifteenEngine) {
+    private void setupUi(FifteenEngine fifteenEngine,FileManager fileManager) {
         window.setLayout(borderLayout);
         jPanel.setLayout(gridLayout);
 
@@ -87,7 +90,7 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
         menuExit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameEngine.saveGame(2);
+                fileManager.saveGame(2);
                 System.exit(0);
             }
         } );
@@ -103,14 +106,14 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
         menuSaveGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameEngine.saveGame(1);
+                fileManager.saveGame(1);
             }
         });
 
         menuLoadGame.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameEngine.loadGame(1);
+                fileManager.loadGame(1);
             }
         });
 
@@ -178,7 +181,7 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
                 }
             };
             File gameName = new File(""); ;
-            JFileChooser fileChooser = new JFileChooser(gameEngine.getSavedGamePath());
+            JFileChooser fileChooser = new JFileChooser(fileManager.getSavedGamePath());
             FileNameExtensionFilter filter = new FileNameExtensionFilter("Fifteen files", "fft");
             fileChooser.setFileFilter(filter);
             int returnVal = fileChooser.showDialog(component,"Load game");

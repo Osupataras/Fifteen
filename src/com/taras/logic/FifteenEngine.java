@@ -1,21 +1,16 @@
 package com.taras.logic;
 
 import com.taras.config.GameDimensions;
+import com.taras.config.IGameMatrixState;
 import com.taras.config.IGameMenu;
-import com.taras.ui.GameUi;
 import com.taras.ui.IUserInterface;
 
-import javax.swing.*;
-import java.io.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Random;
 
 /**
  * Created by Taras on 21.09.2016.
  */
-public class FifteenEngine{
+public class FifteenEngine implements IGameMatrixState {
 
 
     private Random random = new Random();
@@ -24,22 +19,13 @@ public class FifteenEngine{
     private int startZeroY = GameDimensions.DISPLAY_Y - 1;
     private int gameMatrix[][];
     private boolean won = false;
-    private File savedGame;
-    private String savedGamePath;
-    private Date time = new Date();
-    private DateFormat dateFormat = new SimpleDateFormat(" dd MM (HH mm ss)");
+    private IUserInterface iUserInterface;
+    private IGameMenu iGameMenu;
 
 
-    /**
-     * Call the {@link IUserIanterface#swapItems(int, int, int, int)} method of this object to
-     * swap items inside the UI.
-     */
-    public IUserInterface iUserInterface;
-    public IGameMenu iGameMenu;
-
-    public FifteenEngine(IUserInterface iUserInterface,IGameMenu iGameMenu)  {
-        this.iGameMenu = iGameMenu;
+    public FifteenEngine(IUserInterface iUserInterface, IGameMenu iGameMenu)  {
         this.iUserInterface = iUserInterface;
+        this.iGameMenu = iGameMenu;
         gameMatrix = new int[GameDimensions.DISPLAY_X][GameDimensions.DISPLAY_Y];
     }
 
@@ -139,19 +125,36 @@ public class FifteenEngine{
 
 
     }
+    @Override
+    public void setGameMatrixElement(int p,int k ,int gameMatrixElement) {
+        this.gameMatrix[p][k] = gameMatrixElement;
+    }
 
-//getter of game matrix
-    public Integer getMatrixElement(int x, int y) {
+    //getter of game matrix
+    @Override
+    public int getMatrixElement(int x, int y) {
 
         return gameMatrix[x][y];
     }
-    public String getSavedGamePath() {
-
-        return savedGamePath;
+    @Override
+    public int[][] getGameMatrix() {
+        return gameMatrix;
     }
+    @Override
+    public void setStartZeroX(int startZeroX) {
+        this.startZeroX = startZeroX;
+    }
+    @Override
+    public void setStartZeroY(int startZeroY) {
+        this.startZeroY = startZeroY;
+    }
+    @Override
+    public void newGame(){
 
-
-// method for checking winning state
+        createStartState(1000);
+        iGameMenu.setNewGame(gameMatrix);
+    }
+    // method for checking winning state
     public boolean winConfirming(){
         num = 1;
         for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
@@ -163,161 +166,6 @@ public class FifteenEngine{
         }
         return num == GameDimensions.DISPLAY_X*GameDimensions.DISPLAY_Y;
     }
-
-
-
-    // method used to create new game (refill game matrix)
-    public void newGame(){
-
-        createStartState(1000);
-        iGameMenu.setNewGame(gameMatrix);
-    }
-
-    //method for write game progress into the file
-    public void fileWriter(int gameMatrix[][],File file){
-        try {
-            PrintWriter printWriter = new PrintWriter(file.getAbsoluteFile());
-            try{
-                for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
-                    for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
-                        printWriter.write(""+gameMatrix[p][k]+" ");
-                }
-            }
-        }finally {
-                printWriter.close();
-            }
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-// Method for load from file game state
-    public void loadGame(int type){
-        if (type == 1){
-            savedGame = iGameMenu.getSavedGame();
-        }
-        if (type == 2){
-            savedGame = new File(savedGamePath, "/autosave.fft");
-        }
-        StringBuilder stringBuilder = new StringBuilder();
-        int count;
-        int count1 = 0;
-        char c;
-        String matrixElement = "";
-        try {
-            BufferedReader bufferedReader = new BufferedReader(new FileReader(savedGame.getAbsoluteFile()));
-            try{
-                String string;
-                if((string = bufferedReader.readLine()) != null){
-                    stringBuilder.append(string);
-                }
-                for (int k = 0; k < GameDimensions.DISPLAY_Y; k++) {
-                    for (int p = 0; p < GameDimensions.DISPLAY_X; p++) {
-                        for (count=count1;count<string.length();count++){
-                            char stringElement = string.charAt(count);
-                            if(stringElement != ' '){
-                                matrixElement+=stringElement;
-                            }
-                            else{
-                                gameMatrix[p][k] = Integer.parseInt(matrixElement);
-                                if (gameMatrix[p][k] == 0){
-                                    startZeroX = p;
-                                    startZeroY = k;
-                                }
-                                matrixElement = "";
-                                count1=count+1;
-                                break;
-
-                            }
-                        }
-
-                    }
-                }
-
-            }finally {
-                bufferedReader.close();
-            }
-        }
-//FIXME: NEED TO CHANGE INTO FILENOTFOUNDEXEPTION. THEN START NEW GAME!!!!!!!
-        catch (IOException e) {
-            System.out.println(e.toString());
-            newGame();
-            }
-
-        iGameMenu.setNewGame(gameMatrix);
-    }
-
-//method used for save game state into the file
-    public void saveGame(int type){
-        // Classic save
-        if (type == 1) {
-            savedGame = new File(savedGamePath, "" + iGameMenu.setSaveGame() + dateFormat.format(time) + ".fft");
-        }
-        // Save using close button
-        if (type == 2){
-//            try{
-            savedGame = new File(savedGamePath, "/autosave.fft");
-//            }
-//            catch (FileNotFoundException e){
-//                System.out.println("rrr ");
-//            }
-            if (savedGame.exists()){
-                savedGame.delete();
-            }
-        }
-        try {
-            boolean created = savedGame.createNewFile();
-            if(created){
-                fileWriter(gameMatrix,savedGame);
-                System.out.println("Game saved");
-                if (type == 1){
-                    iUserInterface.savedGameMassage();
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Game doesn't saved. Please try again");
-        }
-    }
-    // Method used for create or fill (if it allready created) config file;
-    public void setConfigFile (){
-        File configFile = new File("config.txt");
-        try {
-                if(configFile.exists()){
-                    FileReader fileReader = new FileReader(configFile);
-                    BufferedReader bufferedReader = new BufferedReader(fileReader);
-                    savedGamePath = bufferedReader.readLine();
-                    if(savedGamePath == null){
-                        try{
-                            savedGamePath = iGameMenu.setSavedGamePath();
-                            PrintWriter printWriter = new PrintWriter(configFile.getAbsoluteFile());
-                            printWriter.write(savedGamePath);
-                            printWriter.close();
-                        }finally {
-                            bufferedReader.close();
-                        }
-                    }
-                }                else{
-
-                    Boolean created = configFile.createNewFile();
-                    PrintWriter printWriter = new PrintWriter(configFile.getAbsoluteFile());
-                    if(created){
-                        try{
-                        savedGamePath = iGameMenu.setSavedGamePath();
-                        printWriter.write(savedGamePath);
-                        }
-                        finally {
-                            printWriter.close();
-
-                        }
-                    }
-                }
-
-            }catch (IOException e) {
-                e.printStackTrace();
-            }
-            configFile.setReadOnly();
-    }
-
 }
 
 
