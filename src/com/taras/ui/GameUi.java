@@ -119,6 +119,7 @@ public class GameUi implements KeyListener, IUserInterface,IGameMenu {
 
 
         window.add("Center", jPanel);
+        // TODO: 16.10.2016 timer in the bottom of window
         window.add("South",jTimer);
 
         frame.setContentPane(window);
